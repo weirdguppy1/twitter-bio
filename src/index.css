@@ -1,3 +1,70 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Satoshi";
+    src: url("./assets/fonts/Satoshi-Regular.otf");
+  }
+}
+
+@layer components {
+  .btn {
+    @apply rounded-lg bg-gradient-to-br px-2 py-3 text-base transition-all duration-200 hover:brightness-95 focus:outline-none focus:ring-4;
+  }
+
+  .btn-cyan {
+    @apply bg-gradient-to-br from-cyan-500 to-blue-500 text-white hover:shadow-lg hover:shadow-cyan-200 focus:ring-cyan-200;
+  }
+
+  .btn-white {
+    @apply border-2 border-black bg-white text-black hover:bg-black hover:text-white focus:ring-gray-500;
+  }
+
+  .btn-black {
+    @apply bg-black text-white focus:ring-gray-700;
+  }
+
+  .btn-red {
+    @apply bg-gradient-to-br from-red-500 to-orange-500 text-white hover:shadow-lg hover:shadow-red-300 focus:ring-red-300;
+  }
+
+  .btn-cosmic {
+    @apply bg-size-200 bg-pos-0 hover:bg-pos-100 rounded-xl bg-gradient-to-tl from-cyan-500 via-purple-500 to-cyan-500 text-white transition-all duration-500 hover:shadow-lg hover:shadow-purple-300 focus:ring-purple-300;
+  }
+
+  .sidebar-icon {
+    @apply relative mx-auto mt-2 mb-2 
+    flex h-12 w-12 cursor-pointer items-center  
+  justify-center rounded-3xl bg-gray-400 
+  p-2   text-white
+    shadow-lg transition-all
+    duration-200 ease-linear hover:rounded-xl
+    hover:bg-cyan-600 hover:text-white dark:bg-gray-800;
+  }
+
+  .sidebar-tooltip {
+    @apply absolute left-14 z-50 m-2 w-auto min-w-max origin-left scale-0
+    rounded-2xl bg-gray-900 
+    p-3 text-xs 
+    font-bold text-white shadow-md transition-all duration-200;
+  }
+
+  .tooltip-top {
+    @apply absolute left-14 m-2 w-auto min-w-max origin-top scale-0 rounded-2xl
+    bg-gray-900 p-3 
+    text-xs font-bold 
+    text-white shadow-md transition-all duration-200;
+  }
+
+  .sidebar-hr {
+    @apply mx-2 rounded-full 
+    border border-gray-200 bg-gray-200 dark:border-gray-800
+    dark:bg-gray-800;
+  }
+
+  .input {
+    @apply rounded-lg border-2 border-gray-200 px-4 py-2 transition duration-100 focus:shadow-md focus:outline-none focus:ring-4 focus:ring-blue-300;
+  }
+}

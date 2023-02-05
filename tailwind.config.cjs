@@ -4,36 +4,40 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        tblue: "#1DA1F2",
+        tblue: "#1DA1F2"
       },
       fontFamily: {
-        satoshi: ["Satoshi"],
+        satoshi: ["Satoshi"]
       },
       fontSize: {
         xxs: [
           "0.65rem",
           {
-            lineHeight: "1rem",
-          },
+            lineHeight: "1rem"
+          }
         ],
         xxxs: [
           "0.55rem",
           {
-            lineHeight: "1rem",
-          },
-        ],
+            lineHeight: "1rem"
+          }
+        ]
       },
-      backgroundSize: {
-        "size-200": "200% 200%",
-      },
-      backgroundPosition: {
-        "pos-0": "0% 0%",
-        "pos-100": "100% 100%",
-      },
-
       animation: {
-        gradientChange: "gradientChange 1s infinite",
+        text: "text 3s ease infinite"
       },
-    },
-  },
+      keyframes: {
+        text: {
+          "0%, 100%": {
+            "background-size": "200% 200%",
+            "background-position": "left center"
+          },
+          "50%": {
+            "background-size": "200% 200%",
+            "background-position": "right center"
+          }
+        }
+      }
+    }
+  }
 };
