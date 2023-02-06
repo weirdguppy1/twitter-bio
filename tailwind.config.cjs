@@ -4,7 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        tblue: "#1DA1F2"
+        tblue: "#1DA1F2",
+        tdarkgray: "#657786",
+        tblack: "#14171A"
       },
       fontFamily: {
         satoshi: ["Satoshi"]

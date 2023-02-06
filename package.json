@@ -10,14 +10,20 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.9",
     "@heroicons/react": "^2.0.14",
+    "clsx": "^1.2.1",
     "firebase": "^9.17.1",
     "npm": "^9.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-feather": "^2.0.10",
     "react-firebase-hooks": "^5.1.1",
+    "react-hook-form": "^7.43.0",
     "react-hot-toast": "^2.4.0",
-    "react-router-dom": "^6.8.0"
+    "react-icons": "^4.7.1",
+    "react-router-dom": "^6.8.0",
+    "react-tooltip": "^5.7.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",

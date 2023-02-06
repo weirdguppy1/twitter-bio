@@ -14,6 +14,10 @@
     @apply rounded-lg bg-gradient-to-br px-2 py-3 text-base transition-all duration-200 hover:brightness-95 focus:outline-none focus:ring-4;
   }
 
+  .btn-short {
+    @apply rounded-lg bg-gradient-to-br px-3 py-2 text-base transition-all duration-200 hover:brightness-95 focus:outline-none focus:ring-4;
+  }
+
   .btn-cyan {
     @apply bg-gradient-to-br from-cyan-500 to-blue-500 text-white hover:shadow-lg hover:shadow-cyan-200 focus:ring-cyan-200;
   }
@@ -65,6 +69,6 @@
   }
 
   .input {
-    @apply rounded-lg border-2 border-gray-200 px-4 py-2 transition duration-100 focus:shadow-md focus:outline-none focus:ring-4 focus:ring-blue-300;
+    @apply rounded-lg border-2 border-gray-200 px-2 py-1.5 transition duration-100 focus:border-transparent focus:shadow-md focus:outline-none focus:ring-4 focus:ring-blue-500;
   }
 }
