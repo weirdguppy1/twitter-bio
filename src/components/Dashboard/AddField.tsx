@@ -1,11 +1,29 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { PlusIcon } from "@heroicons/react/24/solid";
-import { Fragment, useState } from "react";
+import React, { Fragment, useState } from "react";
+import { useForm } from "react-hook-form";
+import useFirestore from "../../hooks/useFirestore";
+
+type FormData = {
+  name: string;
+  content: string;
+};
 
 const AddField = () => {
   let [isOpen, setIsOpen] = useState(false);
-  let [fieldName, setFieldName] = useState<string>("");
-  let [fieldContent, setFieldContent] = useState<string>("");
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors }
+  } = useForm<FormData>();
+  const { addField } = useFirestore();
+  const onSubmit = handleSubmit(data => {
+    addField(data.name, data.content);
+    setValue("content", "");
+    setValue("name", "");
+  });
 
   function closeModal() {
     setIsOpen(false);
@@ -57,12 +75,11 @@ const AddField = () => {
                   >
                     Add Text Field
                   </Dialog.Title>
-                  <form className="mt-2 space-y-4">
+                  <form className="mt-2 space-y-4" onSubmit={onSubmit}>
                     <div className="flex flex-col space-y-1">
                       <label>Field Name</label>
                       <input
-                        value={fieldName}
-                        onChange={e => setFieldName(e.target.value)}
+                        {...register("name", { required: true })}
                         className="input w-full"
                         placeholder="Job, Hobbies, etc."
                       />
@@ -70,8 +87,7 @@ const AddField = () => {
                     <div className="flex flex-col space-y-1">
                       <label>Field Content</label>
                       <textarea
-                        value={fieldContent}
-                        onChange={e => setFieldContent(e.target.value)}
+                        {...register("content", { required: true })}
                         className="input h-24 w-full resize-none"
                         placeholder="Content for text field..."
                       />

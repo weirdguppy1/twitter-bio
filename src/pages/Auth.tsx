@@ -1,9 +1,4 @@
 import React, { Children } from "react";
-import {
-  HandThumbUpIcon,
-  HeartIcon,
-  PaintBrushIcon
-} from "@heroicons/react/24/solid";
 import useAuthFuncs from "../hooks/useAuthFuncs";
 import Navbar from "../components/Navbar";
 
