@@ -102,7 +102,7 @@ const AddSocial = () => {
                           <LinkIcon className="mr-2 h-5 w-5 fill-black" />
                         </div>
                       </label>
-                      <div className="flex">
+                      <div className="flex flex-col items-center space-y-2">
                         <input
                           {...register("link", {
                             required: true,
@@ -112,7 +112,9 @@ const AddSocial = () => {
                           type="text"
                           placeholder="https://instagram.com/username, etc."
                         />
-                        {errors.link && <span>Not valid url</span>}
+                        {errors.link && (
+                          <span className="text-red-500">Not valid url.</span>
+                        )}
                       </div>
                     </div>
                     <div className="mt-4 space-x-2">

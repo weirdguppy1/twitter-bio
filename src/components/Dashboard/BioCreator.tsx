@@ -9,8 +9,6 @@ import { useState } from "react";
 import ContentCreator from "./ContentCreator";
 
 const BioCreator = () => {
-  const [bioContent, setBioContent] = useState<string>("");
-
   return (
     <div className="flex w-full max-w-md flex-col items-center px-2 py-8 sm:px-0">
       <Tab.Group>
@@ -18,7 +16,7 @@ const BioCreator = () => {
           <Tab
             className={({ selected }) =>
               clsx(
-                "w-full rounded-lg px-8 py-2.5 text-sm font-medium leading-5 text-blue-700",
+                "w-full rounded-lg px-8 py-2.5 text-sm font-medium leading-5 text-tblue",
                 "ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2",
                 selected
                   ? "bg-white shadow"
@@ -31,7 +29,7 @@ const BioCreator = () => {
           <Tab
             className={({ selected }) =>
               clsx(
-                "w-full rounded-lg px-8 py-2.5 text-sm font-medium leading-5 text-blue-700",
+                "w-full rounded-lg px-8 py-2.5 text-sm font-medium leading-5 text-tblue",
                 "ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2",
                 selected
                   ? "bg-white shadow"

@@ -75,7 +75,7 @@ function UserDropdown(props: { activator: React.ReactNode }) {
               {({ active }) => (
                 <button
                   className={`${
-                    active ? "bg-violet-500 text-white" : "text-gray-900"
+                    active ? "bg-tblue text-white" : "text-gray-900"
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                 >
                   {active ? <CrownIcon /> : <CrownIcon />}
@@ -93,7 +93,7 @@ function UserDropdown(props: { activator: React.ReactNode }) {
                 <button
                   onClick={signOutUser}
                   className={`${
-                    active ? "bg-violet-500 text-white" : "text-gray-900"
+                    active ? "bg-tblue text-white" : "text-gray-900"
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                 >
                   {active ? (

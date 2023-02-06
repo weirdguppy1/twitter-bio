@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, FacebookAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 console.log(import.meta.env.apiKey);
 
@@ -15,3 +16,4 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
+export const db = getFirestore();
