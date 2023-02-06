@@ -12,8 +12,13 @@ const Navbar = () => {
           <Link to="/">Home</Link>
         </h1>
         <h1 className=" underline:underline duration-250 text-xl transition hover:text-gray-100 hover:text-opacity-50">
-          <Link className="btn btn-short btn-cyan" to="/auth">
-            Sign in
+          <Link className="btn btn-short btn-cyan" to="/signup">
+            Sign up
+          </Link>
+        </h1>
+        <h1 className=" underline:underline duration-250 text-xl transition hover:text-gray-100 hover:text-opacity-50">
+          <Link className="btn btn-short btn-black" to="/login">
+            Log in
           </Link>
         </h1>
       </div>

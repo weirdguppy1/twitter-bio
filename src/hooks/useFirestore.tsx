@@ -1,11 +1,14 @@
-import React from "react";
 import {
   updateDoc,
   doc,
   setDoc,
   arrayUnion,
   getDoc,
-  DocumentData
+  DocumentData,
+  query,
+  collection,
+  where,
+  getDocs
 } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -28,14 +31,13 @@ export interface UserDoc extends DocumentData {
   socials: [Link];
   bio: string;
   username: string;
-  twitter_id: string;
 }
 
 const useFirestore = () => {
   const [user] = useAuthState(auth);
   const docRef = doc(db, "users", user?.uid || "fallback");
 
-  const createDoc = async (username: string) => {
+  const createUser = async (username: string) => {
     await setDoc(docRef, {
       links: [],
       fields: [],
@@ -85,19 +87,27 @@ const useFirestore = () => {
     }
   };
 
-  const userExists = async (id: string) => {
+  const userExists = async () => {
     const docSnap = await getDoc(docRef);
     return docSnap.exists();
   };
 
+  const usernameExists = async (username: string) => {
+    const q = query(collection(db, "users"), where("username", "==", username));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.size > 0) return true;
+    return false;
+  };
+
   return {
-    createDoc,
+    createUser,
     addLink,
     addField,
     updateLink,
     updateField,
     getUser,
-    userExists
+    userExists,
+    usernameExists
   };
 };
 

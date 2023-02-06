@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React, { Children, useEffect } from "react";
 import {
   HandThumbUpIcon,
   HeartIcon,
@@ -9,10 +9,12 @@ import DashNav from "../components/Dashboard/DashNav";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import BioCreator from "../components/Dashboard/BioCreator";
+import useFirestore from "../hooks/useFirestore";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
-  const { signOutUser } = useAuthFuncs();
-  const [user, loading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
+  const { userExists } = useFirestore();
 
   return (
     <>

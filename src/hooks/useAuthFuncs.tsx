@@ -8,10 +8,12 @@ import { toast } from "react-hot-toast";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { redirect, useNavigate } from "react-router-dom";
+import useFirestore from "./useFirestore";
 
 const useAuthFuncs = () => {
   const [token, setToken] = useState<string>();
   const [secret, setSecret] = useState<string>();
+  const { userExists } = useFirestore();
   const navigate = useNavigate();
 
   const signInTwitter = () => {
@@ -24,7 +26,10 @@ const useAuthFuncs = () => {
         const secret = credential?.secret;
         setToken(t);
         setSecret(secret);
-        navigate("/dashboard");
+        userExists().then(exists => {
+          if (exists) navigate("/dashboard");
+          else navigate("/init");
+        });
       })
       .catch(error => {
         const errorCode = error.code;
