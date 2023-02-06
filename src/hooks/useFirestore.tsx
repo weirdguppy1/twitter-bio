@@ -1,6 +1,8 @@
 import React from "react";
 
 const useFirestore = () => {
+  const createAccount = () => {};
+
   return {};
 };
 
