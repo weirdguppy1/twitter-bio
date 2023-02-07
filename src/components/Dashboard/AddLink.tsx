@@ -1,10 +1,30 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { LinkIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { Fragment, useState } from "react";
+import { useForm } from "react-hook-form";
+import useFirestore from "../../hooks/useFirestore";
+
+type FormData = {
+  link: string;
+};
 
 const AddLink = () => {
   let [isOpen, setIsOpen] = useState<boolean>(false);
   let [link, setLink] = useState<string>("");
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors }
+  } = useForm<FormData>();
+  const linkRegex =
+    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+  const { addLink } = useFirestore();
+
+  const onSubmit = handleSubmit(data => {
+    setValue("link", "");
+    addLink(data.link);
+  });
 
   function closeModal() {
     setIsOpen(false);
@@ -57,7 +77,7 @@ const AddLink = () => {
                   >
                     Add Link
                   </Dialog.Title>
-                  <form className="mt-2 space-y-4">
+                  <form onSubmit={onSubmit} className="mt-2 space-y-4">
                     <div className="flex flex-col space-y-1">
                       <label>
                         <div className="flex items-center space-x-1">
@@ -66,6 +86,10 @@ const AddLink = () => {
                         </div>
                       </label>
                       <input
+                        {...register("link", {
+                          required: true,
+                          pattern: linkRegex
+                        })}
                         value={link}
                         onChange={e => setLink(e.target.value)}
                         className="input w-full"

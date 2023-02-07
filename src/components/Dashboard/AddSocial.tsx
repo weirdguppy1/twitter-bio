@@ -11,6 +11,7 @@ import {
   FaTwitter,
   FaYoutube
 } from "react-icons/fa";
+import useFirestore from "../../hooks/useFirestore";
 
 type FormData = {
   link: string;
@@ -26,9 +27,11 @@ const AddSocial = () => {
     setValue,
     formState: { errors }
   } = useForm<FormData>();
+  const { addSocial } = useFirestore();
 
   const onSubmit = handleSubmit(data => {
     setValue("link", "");
+    addSocial(data.link);
   });
 
   function closeModal() {
