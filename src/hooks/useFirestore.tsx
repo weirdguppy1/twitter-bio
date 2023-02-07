@@ -13,6 +13,7 @@ import {
 import { auth, db } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { nanoid } from "nanoid";
+import { User } from "firebase/auth";
 
 export type FieldType = {
   title: string;
@@ -25,24 +26,33 @@ export type LinkType = {
   id: string;
 };
 
-export interface UserDoc extends DocumentData {
+type UserInfo = {
+  displayName: string;
+  photoURL: string;
+  uid: string;
+  email: string;
+};
+
+export interface UserDoc {
   links: [LinkType];
   fields: [FieldType];
   socials: [LinkType];
   bio: string;
   username: string;
+  user: UserInfo;
 }
 
 const useFirestore = () => {
   const [user] = useAuthState(auth);
   const docRef = doc(db, "users", user?.uid || "fallback");
 
-  const createUser = async (username: string, uid: string) => {
+  const createUser = async (username: string, uid: string, user: UserInfo) => {
     await setDoc(doc(db, "users", uid), {
       links: [],
       fields: [],
       bio: "",
-      username: username
+      username: username,
+      user: user
     });
   };
 

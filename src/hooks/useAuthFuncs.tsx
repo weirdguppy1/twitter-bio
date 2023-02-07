@@ -50,7 +50,14 @@ const useAuthFuncs = () => {
 
     signInWithPopup(auth, provider)
       .then(result => {
-        createUser(username, result.user.uid);
+        createUser(username, result.user.uid, {
+          displayName: result.user.displayName || "",
+          photoURL:
+            result.user.photoURL ||
+            `https://api.dicebear.com/5.x/thumbs/svg?seed=${result.user.uid}`,
+          uid: result.user.uid,
+          email: result.user.email || ""
+        });
         const credential = TwitterAuthProvider.credentialFromResult(result);
         const t = credential?.accessToken;
         const secret = credential?.secret;
