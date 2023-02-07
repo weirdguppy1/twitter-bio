@@ -5,10 +5,20 @@ import {
   PlusIcon
 } from "@heroicons/react/24/solid";
 import clsx from "clsx";
-import { useState } from "react";
+import { DocumentData } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import useUser from "../../hooks/useUser";
 import ContentCreator from "./ContentCreator";
+import Preview from "./Preview";
 
 const BioCreator = () => {
+  const [data, setData] = useState<DocumentData>();
+  const [value] = useUser();
+
+  useEffect(() => {
+    setData(value?.data());
+  }, [value]);
+
   return (
     <div className="flex w-full max-w-md flex-col items-center px-2 py-8 sm:px-0">
       <Tab.Group>
@@ -41,8 +51,9 @@ const BioCreator = () => {
           </Tab>
         </Tab.List>
         <Tab.Panels>
-          <Tab.Panel>
-            <ContentCreator />
+          <Tab.Panel className="mt-20 flex items-start space-x-12">
+            <Preview data={data} />
+            <ContentCreator data={data} />
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>

@@ -1,25 +1,17 @@
-import { useEffect, useState } from "react";
+import { DocumentData } from "firebase/firestore";
 import { useForm } from "react-hook-form";
-import useFirestore, { FieldType } from "../../hooks/useFirestore";
-import useUser from "../../hooks/useUser";
+import useFirestore from "../../hooks/useFirestore";
 import Field from "../Content/Field";
 import AddField from "./AddField";
 import AddLink from "./AddLink";
 import AddSocial from "./AddSocial";
 
-const ContentCreator = () => {
+const ContentCreator = ({ data }: { data?: DocumentData }) => {
   const { updateBio } = useFirestore();
-  const [fields, setFields] = useState<FieldType[]>([]);
-  const { register, handleSubmit, setValue } = useForm<{ bio: string }>();
+  const { register, handleSubmit } = useForm<{ bio: string }>();
   const onSubmit = handleSubmit(data => {
     updateBio(data.bio);
   });
-  const [value] = useUser();
-
-  useEffect(() => {
-    setValue("bio", value?.data()?.bio);
-    setFields(value?.data()?.fields);
-  }, [value]);
 
   return (
     <div className="mt-12 flex flex-col items-start rounded-xl">
@@ -48,9 +40,6 @@ const ContentCreator = () => {
             <button className="btn-short btn-blue ">Save</button>
           </form>
         </div>
-        {fields?.map(field => (
-          <Field key={field.id} title={field.title} content={field.content} />
-        ))}
       </div>
     </div>
   );
