@@ -39,7 +39,7 @@ export default function SignupInput() {
         </div>
         <button
           type="submit"
-          className="btn-short btn-white border-2 border-black"
+          className="btn-short btn-white border-2 hover:shadow-gray-500"
         >
           Claim Username
         </button>

@@ -22,6 +22,10 @@
     @apply bg-gradient-to-br from-cyan-500 to-blue-500 text-white hover:shadow-lg hover:shadow-cyan-200 focus:ring-cyan-200;
   }
 
+  .btn-blue {
+    @apply bg-[#0c84cd] text-white hover:text-white focus:ring-gray-500;
+  }
+
   .btn-white {
     @apply border-2 border-black bg-white text-black hover:bg-black hover:text-white focus:ring-gray-500;
   }

@@ -14,21 +14,21 @@ import { auth, db } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { nanoid } from "nanoid";
 
-export type Field = {
+export type FieldType = {
   title: string;
   content: string;
   id: string;
 };
 
-export type Link = {
+export type LinkType = {
   link: string;
   id: string;
 };
 
 export interface UserDoc extends DocumentData {
-  links: [Link];
-  fields: [Field];
-  socials: [Link];
+  links: [LinkType];
+  fields: [FieldType];
+  socials: [LinkType];
   bio: string;
   username: string;
 }
@@ -37,8 +37,8 @@ const useFirestore = () => {
   const [user] = useAuthState(auth);
   const docRef = doc(db, "users", user?.uid || "fallback");
 
-  const createUser = async (username: string) => {
-    await setDoc(docRef, {
+  const createUser = async (username: string, uid: string) => {
+    await setDoc(doc(db, "users", uid), {
       links: [],
       fields: [],
       bio: "",
@@ -64,9 +64,15 @@ const useFirestore = () => {
     });
   };
 
+  const updateBio = async (content: string) => {
+    await updateDoc(docRef, {
+      bio: content
+    });
+  };
+
   const updateLink = async (id: string) => {
     const docSnap = await getDoc(docRef);
-    const links: [Link] = docSnap.get("links");
+    const links: [LinkType] = docSnap.get("links");
     await updateDoc(docRef, {
       links: links.filter(link => link.id !== id)
     });
@@ -74,7 +80,7 @@ const useFirestore = () => {
 
   const updateField = async (id: string) => {
     const docSnap = await getDoc(docRef);
-    const links: [Field] = docSnap.get("fields");
+    const links: [FieldType] = docSnap.get("fields");
     await updateDoc(docRef, {
       links: links.filter(link => link.id !== id)
     });
@@ -87,8 +93,8 @@ const useFirestore = () => {
     }
   };
 
-  const userExists = async () => {
-    const docSnap = await getDoc(docRef);
+  const userExists = async (uid: string) => {
+    const docSnap = await getDoc(doc(db, "users", uid));
     return docSnap.exists();
   };
 
@@ -99,13 +105,21 @@ const useFirestore = () => {
     return false;
   };
 
+  const getUserField = async (fieldValue: string) => {
+    const docSnap = await getDoc(docRef);
+    return docSnap.get(fieldValue);
+  };
+
   return {
     createUser,
     addLink,
     addField,
+    addSocial,
     updateLink,
+    updateBio,
     updateField,
     getUser,
+    getUserField,
     userExists,
     usernameExists
   };

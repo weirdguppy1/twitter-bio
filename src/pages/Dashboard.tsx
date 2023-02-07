@@ -21,7 +21,7 @@ export default function Dashboard() {
       <DashNav />
       <main
         id="auth"
-        className="flex h-screen flex-col items-center  bg-tblue py-12 font-satoshi text-white"
+        className="flex min-h-screen flex-col items-center  bg-tblue py-12 font-satoshi text-white"
       >
         <h1 className="text-4xl">
           Hello,{" "}
