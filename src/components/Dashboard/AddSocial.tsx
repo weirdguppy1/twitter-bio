@@ -98,6 +98,7 @@ const AddSocial = () => {
                     </div>
                   </div>
                   <form onSubmit={onSubmit} className="mt-6 space-y-4">
+                    <select></select>
                     <div className="flex flex-col space-y-1">
                       <label>
                         <div className="flex items-center space-x-1">

@@ -1,4 +1,5 @@
 import { DocumentData } from "firebase/firestore";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import useFirestore from "../../hooks/useFirestore";
 import Field from "../Content/Field";
@@ -8,10 +9,16 @@ import AddSocial from "./AddSocial";
 
 const ContentCreator = ({ data }: { data?: DocumentData }) => {
   const { updateBio } = useFirestore();
-  const { register, handleSubmit } = useForm<{ bio: string }>();
+  const { register, handleSubmit, setValue } = useForm<{ bio: string }>();
   const onSubmit = handleSubmit(data => {
     updateBio(data.bio);
   });
+
+  useEffect(() => {
+    if (data) {
+      setValue("bio", data?.bio);
+    }
+  }, [data]);
 
   return (
     <div className="mt-12 flex flex-col items-start rounded-xl">
@@ -37,7 +44,7 @@ const ContentCreator = ({ data }: { data?: DocumentData }) => {
               className="input h-48 w-96 resize-none border-none bg-inherit bg-[#109cf1] text-white placeholder-gray-100"
               placeholder="Write your bio here with no limit..."
             />
-            <button className="btn-short btn-blue ">Save</button>
+            <button className="btn-short btn-blue">Save</button>
           </form>
         </div>
       </div>

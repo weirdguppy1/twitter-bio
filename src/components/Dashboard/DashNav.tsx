@@ -10,17 +10,23 @@ import {
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import useAuthFuncs from "../../hooks/useAuthFuncs";
+import logo from "../../assets/images/logo.png";
+import Logo from "../../assets/images/logo.svg";
 
 const DashNav = () => {
-  const [user, loading, error] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   return (
     <>
       <nav className="bg-tblack p-2 text-white">
         <div className="flex items-center justify-between px-8">
           <div>
-            <div className="rounded-xl p-2.5">
-              <GlobeAltIcon className="h-8 w-8 fill-white" />
+            <div className="rounded-xl fill-white p-2.5 text-white">
+              <img
+                src={logo}
+                className="h-10 w-10 rounded-xl fill-white text-white"
+              />
+              {/* <Logo /> */}
             </div>
           </div>
           <div className="flex items-center space-x-2">
