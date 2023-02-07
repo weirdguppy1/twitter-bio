@@ -1,9 +1,5 @@
 import { Tab } from "@headlessui/react";
-import {
-  GlobeAltIcon,
-  InformationCircleIcon,
-  PlusIcon
-} from "@heroicons/react/24/solid";
+import { ImSpinner } from "react-icons/im";
 import clsx from "clsx";
 import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -13,7 +9,7 @@ import Preview from "./Preview";
 
 const BioCreator = () => {
   const [data, setData] = useState<DocumentData>();
-  const [value] = useUser();
+  const [value, loading] = useUser();
 
   useEffect(() => {
     setData(value?.data());
@@ -52,8 +48,14 @@ const BioCreator = () => {
         </Tab.List>
         <Tab.Panels>
           <Tab.Panel className="mt-20 flex items-start space-x-12">
-            <Preview data={data} />
-            <ContentCreator data={data} />
+            {loading ? (
+              <ImSpinner className="h-5 w-5 animate-spin fill-white" />
+            ) : (
+              <>
+                <Preview data={data} />
+                <ContentCreator data={data} />
+              </>
+            )}
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
