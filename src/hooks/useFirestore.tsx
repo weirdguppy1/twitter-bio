@@ -96,6 +96,14 @@ const useFirestore = () => {
     });
   };
 
+  const deleteSocial = async (id: string) => {
+    const docSnap = await getDoc(docRef);
+    const socials: [LinkType] = docSnap.get("socials");
+    await updateDoc(docRef, {
+      socials: socials.filter(social => social.id !== id)
+    });
+  };
+
   const getUser = async () => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -131,7 +139,8 @@ const useFirestore = () => {
     getUser,
     getUserField,
     userExists,
-    usernameExists
+    usernameExists,
+    deleteSocial
   };
 };
 

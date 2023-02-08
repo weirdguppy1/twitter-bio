@@ -10,8 +10,11 @@ import {
   FaYoutube
 } from "react-icons/fa";
 import clsx from "clsx";
+import { LinkIcon, TrashIcon } from "@heroicons/react/24/solid";
+import useFirestore from "../../hooks/useFirestore";
 
 const Social = (props: {
+  id: string;
   link: string;
   domain: string;
   // | "instagram"
@@ -45,6 +48,8 @@ const Social = (props: {
     )
   };
 
+  const { deleteSocial } = useFirestore();
+
   return (
     <>
       <Popover className="relative">
@@ -68,8 +73,17 @@ const Social = (props: {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="w- absolute left-1/2 z-10 mt-1 w-48 max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
-                <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5"></div>
+              <Popover.Panel className="absolute left-1/2 z-10 mt-1 w-24 max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
+                <div className="overflow-hidden rounded-lg bg-white px-4 py-2 text-black shadow-lg ring-1 ring-black ring-opacity-5">
+                  <div className="flex items-center justify-center space-x-2">
+                    <a href={props.link} target="_blank">
+                      <LinkIcon className="h-5 w-5 fill-black" />
+                    </a>
+                    <button onClick={() => deleteSocial(props.id)}>
+                      <TrashIcon className="duration-250 h-5 w-5 fill-black transition hover:fill-gray-500" />
+                    </button>
+                  </div>
+                </div>
               </Popover.Panel>
             </Transition>
           </>

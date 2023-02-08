@@ -16,7 +16,14 @@ const Preview = ({ data }: { data?: DocumentData }) => {
             const domain = new URL(field.link).hostname
               .replace("www.", "")
               .split(".")[0];
-            return <Social key={field.id} link={field.link} domain={domain} />;
+            return (
+              <Social
+                key={field.id}
+                id={field.id}
+                link={field.link}
+                domain={domain}
+              />
+            );
           })}
         </div>
       </div>
