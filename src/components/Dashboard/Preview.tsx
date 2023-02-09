@@ -1,8 +1,14 @@
 import { DocumentData } from "firebase/firestore";
 import React from "react";
-import { FieldType, LinkType, UserDoc } from "../../hooks/useFirestore";
+import {
+  FieldType,
+  LinkFieldType,
+  LinkType,
+  UserDoc
+} from "../../hooks/useFirestore";
 import Field from "../Content/Field";
 import Social from "../Content/Social";
+import LinkField from "../Content/Link";
 
 const Preview = ({ data }: { data?: DocumentData }) => {
   return (
@@ -32,6 +38,18 @@ const Preview = ({ data }: { data?: DocumentData }) => {
         {data?.fields?.map((field: FieldType) => (
           <Field key={field.id} title={field.title} content={field.content} />
         ))}
+      </div>
+      <div className="flex max-w-lg space-x-1">
+        {data?.links?.map((field: LinkFieldType) => {
+          return (
+            <LinkField
+              title={field.title}
+              link={field.link}
+              key={field.id}
+              id={field.id}
+            />
+          );
+        })}
       </div>
     </div>
   );

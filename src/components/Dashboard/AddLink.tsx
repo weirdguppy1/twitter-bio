@@ -1,11 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { LinkIcon, PlusIcon } from "@heroicons/react/24/solid";
+import { DocumentIcon, LinkIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
 import useFirestore from "../../hooks/useFirestore";
 
 type FormData = {
   link: string;
+  title: string;
 };
 
 const AddLink = () => {
@@ -23,7 +24,7 @@ const AddLink = () => {
 
   const onSubmit = handleSubmit(data => {
     setValue("link", "");
-    addLink(data.link);
+    addLink(data.link, data.title);
   });
 
   function closeModal() {
@@ -81,6 +82,21 @@ const AddLink = () => {
                     <div className="flex flex-col space-y-1">
                       <label>
                         <div className="flex items-center space-x-1">
+                          <span>Title</span>
+                          <DocumentIcon className="mr-2 h-5 w-5 fill-black" />
+                        </div>
+                      </label>
+                      <input
+                        {...register("title", {
+                          required: true,
+                          pattern: linkRegex
+                        })}
+                        value={link}
+                        className="input w-full"
+                        placeholder="Company website, personal website, etc."
+                      />
+                      <label>
+                        <div className="flex items-center space-x-1">
                           <span>Link</span>
                           <LinkIcon className="mr-2 h-5 w-5 fill-black" />
                         </div>
@@ -91,7 +107,6 @@ const AddLink = () => {
                           pattern: linkRegex
                         })}
                         value={link}
-                        onChange={e => setLink(e.target.value)}
                         className="input w-full"
                         placeholder="https://google.com, etc."
                       />

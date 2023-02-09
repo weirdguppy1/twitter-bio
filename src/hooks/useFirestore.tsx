@@ -26,6 +26,12 @@ export type LinkType = {
   id: string;
 };
 
+export type LinkFieldType = {
+  title: string;
+  link: string;
+  id: string;
+};
+
 type UserInfo = {
   displayName: string;
   photoURL: string;
@@ -56,9 +62,9 @@ const useFirestore = () => {
     });
   };
 
-  const addLink = async (link: string) => {
+  const addLink = async (link: string, title: string) => {
     await updateDoc(docRef, {
-      links: arrayUnion({ link: link, id: nanoid() })
+      links: arrayUnion({ link: link, title: title, id: nanoid() })
     });
   };
 
