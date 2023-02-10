@@ -25,7 +25,6 @@ const Social = (props: {
   // | "facebook"
   // | "spotify";
 }) => {
-  console.log(props.domain);
   const iconMap: { [k: string]: React.ReactNode } = {
     instagram: (
       <FaInstagram className="h-6 w-6 fill-white transition hover:brightness-75" />

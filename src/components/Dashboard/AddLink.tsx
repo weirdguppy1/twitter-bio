@@ -11,7 +11,6 @@ type FormData = {
 
 const AddLink = () => {
   let [isOpen, setIsOpen] = useState<boolean>(false);
-  let [link, setLink] = useState<string>("");
   const {
     register,
     handleSubmit,
@@ -79,19 +78,16 @@ const AddLink = () => {
                     Add Link
                   </Dialog.Title>
                   <form onSubmit={onSubmit} className="mt-2 space-y-4">
-                    <div className="flex flex-col space-y-1">
+                    <div className="flex flex-col space-y-2">
                       <label>
                         <div className="flex items-center space-x-1">
                           <span>Title</span>
-                          <DocumentIcon className="mr-2 h-5 w-5 fill-black" />
                         </div>
                       </label>
                       <input
                         {...register("title", {
-                          required: true,
-                          pattern: linkRegex
+                          required: true
                         })}
-                        value={link}
                         className="input w-full"
                         placeholder="Company website, personal website, etc."
                       />
@@ -106,7 +102,6 @@ const AddLink = () => {
                           required: true,
                           pattern: linkRegex
                         })}
-                        value={link}
                         className="input w-full"
                         placeholder="https://google.com, etc."
                       />
@@ -121,7 +116,7 @@ const AddLink = () => {
                       </button>
                       <button
                         type="button"
-                        className="btn-short btn-black"
+                        className="btn-short"
                         onClick={closeModal}
                       >
                         Close

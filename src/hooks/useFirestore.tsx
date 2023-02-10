@@ -63,6 +63,7 @@ const useFirestore = () => {
   };
 
   const addLink = async (link: string, title: string) => {
+    console.log(link, title);
     await updateDoc(docRef, {
       links: arrayUnion({ link: link, title: title, id: nanoid() })
     });
@@ -110,6 +111,14 @@ const useFirestore = () => {
     });
   };
 
+  const deleteField = async (id: string) => {
+    const docSnap = await getDoc(docRef);
+    const fields: [FieldType] = docSnap.get("fields");
+    await updateDoc(docRef, {
+      fields: fields.filter(field => field.id !== id)
+    });
+  };
+
   const getUser = async () => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -146,7 +155,8 @@ const useFirestore = () => {
     getUserField,
     userExists,
     usernameExists,
-    deleteSocial
+    deleteSocial,
+    deleteField
   };
 };
 

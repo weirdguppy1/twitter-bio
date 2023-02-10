@@ -40,11 +40,14 @@ const ContentCreator = ({ data }: { data?: DocumentData }) => {
           </h1>
           <form onClick={onSubmit} className="flex flex-col space-y-2">
             <textarea
+              spellCheck={false}
               {...register("bio", { required: false })}
               className="input h-48 w-96 resize-none border-none bg-inherit bg-[#109cf1] text-white placeholder-gray-100"
               placeholder="Write your bio here with no limit..."
             />
-            <button className="btn-short btn-blue">Save</button>
+            <button type="submit" className="btn-short btn-blue">
+              Save
+            </button>
           </form>
         </div>
       </div>

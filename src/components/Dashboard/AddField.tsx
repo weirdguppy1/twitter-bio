@@ -102,7 +102,7 @@ const AddField = () => {
                       </button>
                       <button
                         type="button"
-                        className="btn-short btn-black"
+                        className="btn-short"
                         onClick={closeModal}
                       >
                         Close

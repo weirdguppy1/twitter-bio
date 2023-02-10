@@ -1,5 +1,5 @@
 import { DocumentData } from "firebase/firestore";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   FieldType,
   LinkFieldType,
@@ -9,10 +9,41 @@ import {
 import Field from "../Content/Field";
 import Social from "../Content/Social";
 import LinkField from "../Content/Link";
+import { closestCenter, DndContext } from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy
+} from "@dnd-kit/sortable";
+import { ImSpinner } from "react-icons/im";
 
 const Preview = ({ data }: { data?: DocumentData }) => {
+  if (!data) return <ImSpinner className="h-5 w-5 animate-spin fill-white" />;
+
+  const [fields, setFields] = useState(data?.fields);
+
+  const handleFieldsDrag = (event: any) => {
+    console.log("Drag end called");
+    const { active, over } = event;
+    console.log("ACTIVE: " + active.id);
+    console.log("OVER :" + over.id);
+
+    if (active.id !== over.id) {
+      setFields((items: any) => {
+        const oldIndex = items.findIndex(
+          (item: FieldType) => item.id === active.id
+        );
+        const newIndex = items.findIndex(
+          (item: FieldType) => item.id === over.id
+        );
+        console.log(arrayMove(items, oldIndex, newIndex));
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
+  };
+
   return (
-    <div className="flex h-[75vh] w-[30rem] flex-col rounded-xl border-2 border-gray-100/25 px-12 py-8 shadow-xl">
+    <div className="min-h-md cursor flex w-[40rem] flex-col rounded-xl border-2 border-gray-100/25 px-6 py-8 shadow-xl">
       <div className="flex flex-col items-center space-y-2">
         <img src={data?.user?.photoURL} className="h-10 w-10 rounded-xl" />
         <h1 className="text-4xl font-extrabold">{data?.user?.displayName}</h1>
@@ -33,13 +64,30 @@ const Preview = ({ data }: { data?: DocumentData }) => {
           })}
         </div>
       </div>
-      <Field bio title="About" content={data?.bio} />
-      <div className="">
-        {data?.fields?.map((field: FieldType) => (
-          <Field key={field.id} title={field.title} content={field.content} />
-        ))}
+
+      <div className="flex flex-col space-y-4">
+        <Field bio title="Bio" content={data?.bio} id="bio" />
+        <DndContext
+          collisionDetection={closestCenter}
+          onDragEnd={handleFieldsDrag}
+        >
+          <SortableContext
+            items={fields}
+            strategy={verticalListSortingStrategy}
+          >
+            {fields?.map((field: FieldType) => (
+              <Field
+                id={field.id}
+                key={field.id}
+                title={field.title}
+                content={field.content}
+              />
+            ))}
+          </SortableContext>
+        </DndContext>
       </div>
-      <div className="flex max-w-lg space-x-1">
+
+      <div className="mt-10 flex flex-col space-y-2">
         {data?.links?.map((field: LinkFieldType) => {
           return (
             <LinkField
