@@ -76,3 +76,11 @@
     @apply rounded-lg border-2 border-gray-200 px-2 py-1.5 transition duration-100 focus:border-transparent focus:shadow-md focus:outline-none focus:ring-4 focus:ring-blue-500;
   }
 }
+
+@layer utilities {
+}
+
+/* .em-emoji-picker {
+  --font-family: "Satoshi";
+  width: "20px";
+} */

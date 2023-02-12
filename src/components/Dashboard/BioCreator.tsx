@@ -15,6 +15,8 @@ const BioCreator = () => {
     setData(value?.data());
   }, [value]);
 
+  if (loading) return <ImSpinner className="h-5 w-5 animate-spin fill-white" />;
+
   return (
     <div className="flex w-full max-w-md flex-col items-center px-2 py-8 sm:px-0">
       <Tab.Group>
@@ -48,14 +50,10 @@ const BioCreator = () => {
         </Tab.List>
         <Tab.Panels>
           <Tab.Panel className="mt-20 flex items-start space-x-12">
-            {loading ? (
-              <ImSpinner className="h-5 w-5 animate-spin fill-white" />
-            ) : (
-              <>
-                <Preview data={data} />
-                <ContentCreator data={data} />
-              </>
-            )}
+            <>
+              <Preview data={data} />
+              <ContentCreator data={data} />
+            </>
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>

@@ -19,10 +19,12 @@ const AddField = () => {
     formState: { errors }
   } = useForm<FormData>();
   const { addField } = useFirestore();
+
   const onSubmit = handleSubmit(data => {
     addField(data.name, data.content);
     setValue("content", "");
     setValue("name", "");
+    closeModal();
   });
 
   function closeModal() {
@@ -77,9 +79,12 @@ const AddField = () => {
                   </Dialog.Title>
                   <form className="mt-2 space-y-4" onSubmit={onSubmit}>
                     <div className="flex flex-col space-y-1">
-                      <label>Field Name</label>
+                      <label>Field Title</label>
                       <input
-                        {...register("name", { required: true })}
+                        {...register("name", {
+                          required: true,
+                          maxLength: { value: 50, message: "Title too long." }
+                        })}
                         className="input w-full"
                         placeholder="Job, Hobbies, etc."
                       />
@@ -87,16 +92,27 @@ const AddField = () => {
                     <div className="flex flex-col space-y-1">
                       <label>Field Content</label>
                       <textarea
-                        {...register("content", { required: true })}
+                        {...register("content", {
+                          required: true,
+                          maxLength: {
+                            value: 2000,
+                            message: "Content too long."
+                          }
+                        })}
                         className="input h-24 w-full resize-none"
                         placeholder="Content for text field..."
                       />
                     </div>
+                    {errors.name && (
+                      <h1 className="text-red-500">{errors.name.message}</h1>
+                    )}
+                    {errors.content && (
+                      <h1 className="text-red-500">{errors.content.message}</h1>
+                    )}
                     <div className="mt-4 space-x-2">
                       <button
                         type="submit"
                         className="btn-short bg-tblue text-white"
-                        onClick={closeModal}
                       >
                         Create
                       </button>

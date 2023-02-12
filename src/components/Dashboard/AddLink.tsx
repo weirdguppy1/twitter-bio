@@ -24,6 +24,7 @@ const AddLink = () => {
   const onSubmit = handleSubmit(data => {
     setValue("link", "");
     addLink(data.link, data.title);
+    closeModal();
   });
 
   function closeModal() {
@@ -86,7 +87,11 @@ const AddLink = () => {
                       </label>
                       <input
                         {...register("title", {
-                          required: true
+                          required: true,
+                          maxLength: {
+                            value: 50,
+                            message: "Title too long."
+                          }
                         })}
                         className="input w-full"
                         placeholder="Company website, personal website, etc."
@@ -106,11 +111,16 @@ const AddLink = () => {
                         placeholder="https://google.com, etc."
                       />
                     </div>
+                    {errors.link && (
+                      <h1 className="text-red-500">Not valid link.</h1>
+                    )}
+                    {errors.title && (
+                      <h1 className="text-red-500">{errors.title.message}</h1>
+                    )}
                     <div className="mt-4 space-x-2">
                       <button
                         type="submit"
                         className="btn-short bg-tblue text-white"
-                        onClick={closeModal}
                       >
                         Create
                       </button>

@@ -2,10 +2,12 @@ import { DocumentData } from "firebase/firestore";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import useFirestore from "../../hooks/useFirestore";
-import Field from "../Content/Field";
+import Field from "../Content/OldField";
 import AddField from "./AddField";
 import AddLink from "./AddLink";
 import AddSocial from "./AddSocial";
+import emojiData from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
 
 const ContentCreator = ({ data }: { data?: DocumentData }) => {
   const { updateBio } = useFirestore();
@@ -45,6 +47,23 @@ const ContentCreator = ({ data }: { data?: DocumentData }) => {
               className="input h-48 w-96 resize-none border-none bg-inherit bg-[#109cf1] text-white placeholder-gray-100"
               placeholder="Write your bio here with no limit..."
             />
+            {/*
+            <Picker
+              data={emojiData}
+              theme="light"
+              navPosition="bottom"
+              previewPosition="none"
+              categories={[
+                "people",
+                "nature",
+                "foods",
+                "activity",
+                "places",
+                "objects",
+                "symbols",
+                "flags"
+              ]}
+            /> */}
             <button type="submit" className="btn-short btn-blue">
               Save
             </button>

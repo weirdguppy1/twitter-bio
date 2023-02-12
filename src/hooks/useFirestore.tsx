@@ -87,25 +87,52 @@ const useFirestore = () => {
     });
   };
 
-  const updateLink = async (id: string) => {
+  const updateLink = async (id: string, title: string, link: string) => {
     const docSnap = await getDoc(docRef);
-    const links: [LinkType] = docSnap.get("links");
+    const links: LinkFieldType[] = docSnap.get("links");
+    await updateDoc(docRef, {
+      links: links.map(linkField =>
+        linkField.id === id
+          ? { title: title, link: link, id: linkField.id }
+          : linkField
+      )
+    });
+  };
+
+  const deleteLink = async (id: string) => {
+    const docSnap = await getDoc(docRef);
+    const links: LinkFieldType[] = docSnap.get("links");
     await updateDoc(docRef, {
       links: links.filter(link => link.id !== id)
     });
   };
-
-  const updateField = async (id: string) => {
-    const docSnap = await getDoc(docRef);
-    const links: [FieldType] = docSnap.get("fields");
+  const updateLinks = async (links: LinkFieldType[]) => {
     await updateDoc(docRef, {
-      links: links.filter(link => link.id !== id)
+      links: links
+    });
+  };
+
+  const updateField = async (id: string, title: string, content: string) => {
+    const docSnap = await getDoc(docRef);
+    const fields: FieldType[] = docSnap.get("fields");
+    await updateDoc(docRef, {
+      fields: fields.map(field =>
+        field.id === id
+          ? { title: title, content: content, id: field.id }
+          : field
+      )
+    });
+  };
+
+  const updateFields = async (fields: FieldType[]) => {
+    await updateDoc(docRef, {
+      fields: fields
     });
   };
 
   const deleteSocial = async (id: string) => {
     const docSnap = await getDoc(docRef);
-    const socials: [LinkType] = docSnap.get("socials");
+    const socials: LinkType[] = docSnap.get("socials");
     await updateDoc(docRef, {
       socials: socials.filter(social => social.id !== id)
     });
@@ -113,7 +140,7 @@ const useFirestore = () => {
 
   const deleteField = async (id: string) => {
     const docSnap = await getDoc(docRef);
-    const fields: [FieldType] = docSnap.get("fields");
+    const fields: FieldType[] = docSnap.get("fields");
     await updateDoc(docRef, {
       fields: fields.filter(field => field.id !== id)
     });
@@ -149,6 +176,8 @@ const useFirestore = () => {
     addField,
     addSocial,
     updateLink,
+    deleteLink,
+    updateLinks,
     updateBio,
     updateField,
     getUser,
@@ -156,6 +185,7 @@ const useFirestore = () => {
     userExists,
     usernameExists,
     deleteSocial,
+    updateFields,
     deleteField
   };
 };

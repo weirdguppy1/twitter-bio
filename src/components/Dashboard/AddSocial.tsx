@@ -32,6 +32,7 @@ const AddSocial = () => {
   const onSubmit = handleSubmit(data => {
     setValue("link", "");
     addSocial(data.link);
+    closeModal();
   });
 
   function closeModal() {
@@ -116,7 +117,7 @@ const AddSocial = () => {
                           placeholder="https://instagram.com/username, etc."
                         />
                         {errors.link && (
-                          <span className="text-red-500">Not valid url.</span>
+                          <h1 className="text-red-500">Not valid url.</h1>
                         )}
                       </div>
                     </div>
@@ -124,7 +125,6 @@ const AddSocial = () => {
                       <button
                         type="submit"
                         className="btn-short bg-tblue text-white"
-                        onClick={closeModal}
                       >
                         Create
                       </button>
