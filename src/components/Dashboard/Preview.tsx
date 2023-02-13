@@ -6,9 +6,9 @@ import useFirestore, {
   LinkType,
   UserDoc
 } from "../../hooks/useFirestore";
-import Field from "../Content/Field";
-import Social from "../Content/Social";
-import LinkField from "../Content/Link";
+import Field from "../Creator/Field";
+import Social from "../Creator/Social";
+import LinkField from "../Creator/Link";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import {
   arrayMove,

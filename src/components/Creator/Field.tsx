@@ -1,42 +1,43 @@
 import { useSortable } from "@dnd-kit/sortable";
-import { Dialog, Transition } from "@headlessui/react";
-import { LinkIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
 import { CSS } from "@dnd-kit/utilities";
-import React, { Fragment, useState } from "react";
-import { useForm } from "react-hook-form";
-import useFirestore from "../../hooks/useFirestore";
 import { RxDragHandleDots1 } from "react-icons/rx";
+import clsx from "clsx";
+import React, { Fragment, useState } from "react";
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { useForm } from "react-hook-form";
+import { Transition, Dialog } from "@headlessui/react";
+import useFirestore from "../../hooks/useFirestore";
 
 type FormData = {
   title: string;
-  link: string;
+  content: string;
 };
 
-const Link = (props: { link: string; title: string; id: string }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+const Field = (props: {
+  content: string;
+  title: string;
+  bio?: boolean;
+  id: string;
+}) => {
+  let [isOpen, setIsOpen] = useState(false);
+  let [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
-  const linkRegex =
-    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
-  const { updateLink, deleteLink } = useFirestore();
+
+  const { updateField, deleteField } = useFirestore();
   const {
     handleSubmit,
     register,
     setValue,
     formState: { errors }
   } = useForm<FormData>({
-    defaultValues: { title: props.title, link: props.link }
+    defaultValues: { title: props.title, content: props.content }
   });
 
-  const style = {
-    transform: CSS.Transform.toString(transform && { ...transform, scaleY: 1 }),
-    transition
-  };
-
   const onSubmit = handleSubmit(data => {
-    updateLink(props.id, data.title, data.link);
     closeModal();
+    updateField(props.id, data.title, data.content);
   });
 
   const closeModal = () => {
@@ -45,7 +46,7 @@ const Link = (props: { link: string; title: string; id: string }) => {
 
   const openModal = () => {
     setValue("title", props.title);
-    setValue("link", props.link);
+    setValue("content", props.content);
     setIsOpen(true);
   };
 
@@ -60,40 +61,59 @@ const Link = (props: { link: string; title: string; id: string }) => {
 
   const handleDelete = () => {
     closeDeleteModal();
-    deleteLink(props.id);
+    deleteField(props.id);
+  };
+
+  const style = {
+    transform: CSS.Transform.toString(transform && { ...transform, scaleY: 1 }),
+    transition
   };
 
   return (
     <>
-      <div style={style} className="flex max-w-full flex-col">
-        <div className="flex items-center space-x-1">
-          <div
-            ref={setNodeRef}
-            {...attributes}
-            {...listeners}
-            className="rotate-90"
-          >
-            <RxDragHandleDots1 className="h-6 w-6 fill-white" />
+      <div
+        style={style}
+        className={clsx(
+          "mt-4 flex flex-col space-y-4 border-2 border-transparent p-4",
+          !props.bio && "rounded-xl hover:border-gray-200/10"
+        )}
+      >
+        <div className={clsx("flex items-start", !props.bio && "space-x-4")}>
+          <div className="flex flex-col items-center space-y-1">
+            <div ref={setNodeRef} {...attributes} {...listeners}>
+              <RxDragHandleDots1
+                className={clsx("h-6 w-6 fill-white", props.bio && "hidden")}
+              />
+            </div>
+            <button onClick={openModal}>
+              <PencilSquareIcon
+                className={clsx("h-5 w-5 fill-white", props.bio && "hidden")}
+              />
+            </button>
           </div>
-          <button onClick={openModal}>
-            <PencilSquareIcon className="h-5 w-5 fill-white" />
-          </button>
+          <div className="flex flex-col items-start">
+            <div className="flex w-fit max-w-sm flex-col rounded-md bg-black px-4 py-1">
+              <div className="overflow-hidden">
+                <h1
+                  className={clsx(
+                    "text-2xl font-bold",
+                    props.bio &&
+                      "animate-text bg-gradient-to-r from-purple-500 via-green-500 to-pink-600 bg-clip-text text-transparent"
+                  )}
+                  style={{ wordWrap: "break-word" }}
+                >
+                  {props.title}
+                </h1>
+              </div>
+            </div>
+            <p
+              className="mx-3 mt-2 whitespace-pre-line text-lg"
+              placeholder="Write your bio here with no limit..."
+            >
+              {props.content}
+            </p>
+          </div>
         </div>
-        <a target="_blank" href={props.link}>
-          <div className="duration-250 mt-2 flex items-center space-x-4 rounded-2xl bg-white px-2 py-3 text-black shadow-lg transition hover:scale-[1.02] hover:shadow-xl">
-            <div className="rounded-full bg-black p-2">
-              <LinkIcon className="h-5 w-5 fill-white" />
-            </div>
-            <div className="overflow-hidden">
-              <h1
-                className="text-md font-bold"
-                style={{ wordWrap: "break-word" }}
-              >
-                {props.title}
-              </h1>
-            </div>
-          </div>
-        </a>
       </div>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -124,39 +144,42 @@ const Link = (props: { link: string; title: string; id: string }) => {
                     as="h3"
                     className="text-xl font-bold leading-6 text-gray-900"
                   >
-                    Update Link
+                    Update Field
                   </Dialog.Title>
-                  <form onSubmit={onSubmit} className="mt-2 space-y-4">
+                  <form className="mt-2 space-y-4" onSubmit={onSubmit}>
                     <div className="flex flex-col space-y-2">
-                      <label>
-                        <div className="flex items-center space-x-1">
-                          <span>Title</span>
-                        </div>
-                      </label>
+                      <label>Field Name</label>
                       <input
                         {...register("title", {
-                          required: true
-                        })}
-                        className="input w-full"
-                        placeholder="Company website, personal website, etc."
-                      />
-                      <label>
-                        <div className="flex items-center space-x-1">
-                          <span>Link</span>
-                          <LinkIcon className="mr-2 h-5 w-5 fill-black" />
-                        </div>
-                      </label>
-                      <input
-                        {...register("link", {
                           required: true,
-                          pattern: linkRegex
+                          maxLength: {
+                            value: 50,
+                            message: "Title too long."
+                          }
                         })}
                         className="input w-full"
-                        placeholder="https://google.com, etc."
+                        placeholder="Job, Hobbies, etc."
                       />
                     </div>
-                    {errors.link && (
-                      <h1 className="text-red-500">Not valid link.</h1>
+                    <div className="flex flex-col space-y-1">
+                      <label>Field Content</label>
+                      <textarea
+                        {...register("content", {
+                          required: true,
+                          maxLength: {
+                            value: 2000,
+                            message: "Content too long."
+                          }
+                        })}
+                        className="input h-24 w-full resize-none"
+                        placeholder="Content for text field..."
+                      />
+                    </div>
+                    {errors.title && (
+                      <h1 className="text-red-500">{errors.title.message}</h1>
+                    )}
+                    {errors.content && (
+                      <h1 className="text-red-500">{errors.content.message}</h1>
                     )}
                     <button onClick={openDeleteModal}>
                       <h1 className="text-red-500 hover:underline">Delete</h1>
@@ -242,4 +265,4 @@ const Link = (props: { link: string; title: string; id: string }) => {
   );
 };
 
-export default Link;
+export default Field;

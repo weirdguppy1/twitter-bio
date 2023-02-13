@@ -2,12 +2,11 @@ import { DocumentData } from "firebase/firestore";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import useFirestore from "../../hooks/useFirestore";
-import Field from "../Content/OldField";
 import AddField from "./AddField";
 import AddLink from "./AddLink";
 import AddSocial from "./AddSocial";
-import emojiData from "@emoji-mart/data";
-import Picker from "@emoji-mart/react";
+import { AiFillRobot } from "react-icons/ai";
+import BioGenerate from "../Creator/BioGenerate";
 
 const ContentCreator = ({ data }: { data?: DocumentData }) => {
   const { updateBio } = useFirestore();
@@ -32,7 +31,7 @@ const ContentCreator = ({ data }: { data?: DocumentData }) => {
           </div>
           <AddSocial />
         </div>
-        <div className="mt-4 flex flex-col space-y-4">
+        <div className="mt-4 flex flex-col space-y-2">
           <h1 className="text-2xl font-bold underline decoration-blue-300 decoration-wavy">
             <div className="flex items-center">
               <span>Your Bio</span>
@@ -68,6 +67,7 @@ const ContentCreator = ({ data }: { data?: DocumentData }) => {
               Save
             </button>
           </form>
+          <BioGenerate />
         </div>
       </div>
     </div>
