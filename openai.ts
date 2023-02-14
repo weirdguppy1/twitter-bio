@@ -9,7 +9,8 @@ const openai = new OpenAIApi(configuration);
 const generateBio = async (prompt: string) => {
   const completion = await openai.createCompletion({
     model: "text-davinci-003",
-    prompt: prompt
+    prompt: `Write a short bio from the prompt written in first person: "${prompt}"`,
+    max_tokens: 200
   });
   return completion.data;
 };

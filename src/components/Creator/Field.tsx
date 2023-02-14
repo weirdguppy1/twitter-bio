@@ -106,10 +106,7 @@ const Field = (props: {
                 </h1>
               </div>
             </div>
-            <p
-              className="mx-3 mt-2 whitespace-pre-line text-lg"
-              placeholder="Write your bio here with no limit..."
-            >
+            <p className="mx-3 mt-2 whitespace-pre-line text-lg">
               {props.content}
             </p>
           </div>

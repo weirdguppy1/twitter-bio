@@ -43,7 +43,7 @@ const ContentCreator = ({ data }: { data?: DocumentData }) => {
             <textarea
               spellCheck={false}
               {...register("bio", { required: false })}
-              className="input h-48 w-96 resize-none border-none bg-inherit bg-[#109cf1] text-white placeholder-gray-100"
+              className="input mt-3 h-48 w-96 resize-none border-none bg-inherit bg-[#109cf1] text-white placeholder-gray-100/50"
               placeholder="Write your bio here with no limit..."
             />
             {/*

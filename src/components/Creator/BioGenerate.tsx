@@ -1,6 +1,10 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { Dialog, Transition } from "@headlessui/react";
-import { LinkIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
+import {
+  DocumentIcon,
+  LinkIcon,
+  PencilSquareIcon
+} from "@heroicons/react/24/solid";
 import { CSS } from "@dnd-kit/utilities";
 import React, { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -8,16 +12,18 @@ import useFirestore from "../../hooks/useFirestore";
 import { RxDragHandleDots1 } from "react-icons/rx";
 import { AiFillRobot } from "react-icons/ai";
 import { generateBio } from "../../../openai";
+import { ImSpinner } from "react-icons/im";
+import { toast } from "react-hot-toast";
 
 type FormData = {
   prompt: string;
 };
 
 const BioGenerate = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [response, setResponse] = useState<string>();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const linkRegex =
-    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
   const {
     handleSubmit,
     register,
@@ -28,7 +34,11 @@ const BioGenerate = () => {
   });
 
   const onSubmit = handleSubmit(data => {
-    generateBio(data.prompt).then(data => {});
+    setLoading(true);
+    generateBio(data.prompt).then(data => {
+      setResponse(data.choices[0].text?.replaceAll("\n", ""));
+      setLoading(false);
+    });
   });
 
   const closeModal = () => {
@@ -37,6 +47,13 @@ const BioGenerate = () => {
 
   const openModal = () => {
     setIsOpen(true);
+  };
+
+  const handleCopy = () => {
+    if (!response) return;
+    navigator.clipboard.writeText(response).then(() => {
+      toast.success("Copied!");
+    });
   };
 
   return (
@@ -48,7 +65,7 @@ const BioGenerate = () => {
       >
         <div className="flex items-center justify-center space-x-1">
           <AiFillRobot className="h-5 w-5" />
-          <h1>Generate </h1>
+          <h1>Generate</h1>
         </div>
       </button>
       <Transition appear show={isOpen} as={Fragment}>
@@ -92,7 +109,7 @@ const BioGenerate = () => {
                       <textarea
                         {...register("prompt", {
                           required: true,
-                          maxLength: { value: 50, message: "Prompt too long." }
+                          maxLength: { value: 200, message: "Prompt too long." }
                         })}
                         className="input w-full resize-none"
                         placeholder="Teacher who likes fishing, has two kids, etc..."
@@ -119,6 +136,26 @@ const BioGenerate = () => {
                       </div>
                     </div>
                   </form>
+                  {loading ? (
+                    <div className="mt-10 flex justify-center">
+                      <ImSpinner className="h-5 w-5 animate-spin fill-black" />
+                    </div>
+                  ) : (
+                    <div className="mt-10 flex flex-col">
+                      {response && (
+                        <button
+                          onClick={handleCopy}
+                          className="btn-short btn-black w-fit border-none"
+                        >
+                          <div className=" flex items-center space-x-1">
+                            <DocumentIcon className="h-4 w-4" />
+                            <h1>Copy</h1>
+                          </div>
+                        </button>
+                      )}
+                      <p className="">{response}</p>
+                    </div>
+                  )}
                 </Dialog.Panel>
               </Transition.Child>
             </div>
