@@ -1,17 +1,18 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase";
 import {
   ArrowLeftOnRectangleIcon,
   GlobeAltIcon,
+  LinkIcon,
   ShareIcon
 } from "@heroicons/react/24/solid";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import useAuthFuncs from "../../hooks/useAuthFuncs";
 import logo from "../../assets/images/logo.png";
-import Logo from "../../assets/images/logo.svg";
+import useFirestore from "../../hooks/useFirestore";
 
 const DashNav = () => {
   const [user] = useAuthState(auth);
@@ -30,17 +31,21 @@ const DashNav = () => {
             </div>
           </div>
           <div className="flex items-center space-x-2">
-            <button className="btn bg-gray-200 py-2 px-6 text-black">
-              <div className="flex items-center space-x-2">
-                <span>Share</span>
-                <ShareIcon className="h-5 w-5" />
-              </div>
-            </button>
+            <ShareDropdown
+              activator={
+                <button className="btn bg-gray-200 py-2 px-6 text-black">
+                  <div className="flex items-center space-x-2 text-sm">
+                    <span>Share</span>
+                    <ShareIcon className="h-5 w-5" />
+                  </div>
+                </button>
+              }
+            />
             <UserDropdown
               activator={
                 <img
                   src={user?.photoURL || ""}
-                  className="duration-250 rounded-full border-2 border-gray-800 transition hover:cursor-pointer hover:border-gray-700"
+                  className="duration-250 h-10 w-10 rounded-full border-2 border-gray-800 transition hover:cursor-pointer hover:border-gray-700 sm:h-12 sm:w-12"
                 />
               }
             />
@@ -84,7 +89,7 @@ function UserDropdown(props: { activator: React.ReactNode }) {
                     active ? "bg-tblue text-white" : "text-gray-900"
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                 >
-                  {active ? <CrownIcon /> : <CrownIcon />}
+                  <CrownIcon />
                   <div className="space-x-2">
                     <span>Premium</span>
                     <span className="rounded-full bg-tblack px-4 py-0.5 text-white shadow-lg">
@@ -115,6 +120,61 @@ function UserDropdown(props: { activator: React.ReactNode }) {
                   )}
                   Logout
                 </button>
+              )}
+            </Menu.Item>
+          </div>
+        </Menu.Items>
+      </Transition>
+    </Menu>
+  );
+}
+
+function ShareDropdown(props: { activator: React.ReactNode }) {
+  const { signOutUser } = useAuthFuncs();
+  const { getUserField } = useFirestore();
+  const [username, setUsername] = useState<string>();
+
+  useEffect(() => {
+    getUserField("username").then(val => setUsername(val));
+  }, []);
+
+  return (
+    <Menu as="div" className="relative inline-block text-left">
+      <Menu.Button>{props.activator}</Menu.Button>
+      <Transition
+        as={Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
+        <Menu.Items className="absolute right-0 mt-3 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div className="py-1 px-4 text-tblack">
+            <h1
+              className="text-lg font-bold"
+              style={{ wordWrap: "break-word" }}
+            >
+              Share
+            </h1>
+          </div>
+          <div className="px-1 py-1 ">
+            <Menu.Item>
+              {({ active }) => (
+                <a
+                  href={username || "dashboard"}
+                  target="_blank"
+                  className={`${
+                    active ? "bg-tblue text-white" : "text-gray-900"
+                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                >
+                  <div className="flex items-center space-x-2">
+                    <LinkIcon className="h-5 w-5" />
+                    {/* <h1 className="text-purple-500 font-bold text-xxs">{`${window.location.origin}/${username}`}</h1> */}
+                    <h1>Bio Link</h1>
+                  </div>
+                </a>
               )}
             </Menu.Item>
           </div>

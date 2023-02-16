@@ -64,7 +64,7 @@ const Preview = ({ data }: { data?: DocumentData }) => {
   if (!data) return <ImSpinner className="h-5 w-5 animate-spin fill-white" />;
 
   return (
-    <div className="min-h-md cursor flex w-[40rem] flex-col rounded-xl border-2 border-gray-100/25 px-6 py-8 shadow-xl">
+    <div className="min-h-md cursor flex flex-col rounded-xl border-2 border-gray-100/25 px-6 py-8 shadow-xl sm:w-[30rem] md:w-[40rem]">
       <div className="flex flex-col items-center space-y-2">
         <img src={data.user.photoURL} className="h-10 w-10 rounded-xl" />
         <h1 className="text-4xl font-extrabold">{data.user.displayName}</h1>

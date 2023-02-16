@@ -49,9 +49,11 @@ const BioCreator = () => {
           </Tab>
         </Tab.List>
         <Tab.Panels>
-          <Tab.Panel className="mt-20 flex items-start space-x-12">
+          <Tab.Panel className="mt-20 flex flex-col items-center xl:flex-row xl:items-start xl:space-x-12">
             <>
-              <Preview data={data} />
+              <div className="">
+                <Preview data={data} />
+              </div>
               <ContentCreator data={data} />
             </>
           </Tab.Panel>
