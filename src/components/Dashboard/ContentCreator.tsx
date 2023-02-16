@@ -43,26 +43,9 @@ const ContentCreator = ({ data }: { data?: DocumentData }) => {
             <textarea
               spellCheck={false}
               {...register("bio", { required: false })}
-              className="input mt-3 h-48 w-full resize-none border-none bg-inherit bg-[#109cf1] text-white placeholder-gray-100/50 sm:w-96 md:w-[40rem] lg:h-56 xl:h-60 xl:w-96"
+              className="input mt-3 h-48 w-full resize-none border-none bg-inherit bg-[#109cf1] text-white placeholder-gray-100/50 sm:w-96 md:w-[40rem] md:p-4 lg:h-56 xl:h-60 xl:w-96"
               placeholder="Write your bio here with no limit..."
             />
-            {/*
-            <Picker
-              data={emojiData}
-              theme="light"
-              navPosition="bottom"
-              previewPosition="none"
-              categories={[
-                "people",
-                "nature",
-                "foods",
-                "activity",
-                "places",
-                "objects",
-                "symbols",
-                "flags"
-              ]}
-            /> */}
             <button type="submit" className="btn-short btn-blue">
               Save
             </button>

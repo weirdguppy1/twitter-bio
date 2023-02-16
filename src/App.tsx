@@ -5,9 +5,10 @@ import RedirectRoute from "./components/RedirectRoute";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Layout from "./pages/Layout";
-import UserInit from "./components/SignupInput";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Link from "./pages/Bio";
+import Bio from "./pages/Bio";
 
 function App() {
   return (
@@ -24,7 +25,6 @@ function App() {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-
           <Route
             path="/dashboard"
             element={
@@ -33,12 +33,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          {/* <Route
-            path="/init"
-            element={
-              <UserInit />
-            }
-          /> */}
+          <Route path="/:username" element={<Bio />} />
         </Routes>
       </Layout>
     </BrowserRouter>

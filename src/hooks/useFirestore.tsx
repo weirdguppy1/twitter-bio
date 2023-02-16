@@ -153,6 +153,15 @@ const useFirestore = () => {
     }
   };
 
+  const getUserFromUsername = async (username: string) => {
+    const q = query(collection(db, "users"), where("username", "==", username));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.size === 0) {
+      return null;
+    }
+    return querySnapshot.docs[0].data();
+  };
+
   const userExists = async (uid: string) => {
     const docSnap = await getDoc(doc(db, "users", uid));
     return docSnap.exists();
@@ -182,6 +191,7 @@ const useFirestore = () => {
     updateField,
     getUser,
     getUserField,
+    getUserFromUsername,
     userExists,
     usernameExists,
     deleteSocial,
