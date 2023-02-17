@@ -13,7 +13,7 @@ import useFirestore from "./useFirestore";
 const useAuthFuncs = () => {
   const [token, setToken] = useState<string>();
   const [secret, setSecret] = useState<string>();
-  const { userExists, usernameExists, createUser } = useFirestore();
+  const { userExists, usernameExists, createUser, docExists } = useFirestore();
   const navigate = useNavigate();
 
   const signInTwitter = async () => {
@@ -43,13 +43,19 @@ const useAuthFuncs = () => {
   const signUpTwitter = async (username: string) => {
     const provider = new TwitterAuthProvider();
     const username_exists = await usernameExists(username);
+
     if (username_exists) {
       toast.error("Username already exists!");
       return;
     }
 
     signInWithPopup(auth, provider)
-      .then(result => {
+      .then(async result => {
+        const doc_exists = await docExists(result.user.uid);
+        if (doc_exists) {
+          toast.error("Twitter user already has account.");
+          return;
+        }
         createUser(username, result.user.uid, {
           displayName: result.user.displayName || "",
           photoURL:

@@ -4,20 +4,19 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 
 const Navbar = () => {
-  const [user, loading, error] = useAuthState(auth);
   return (
-    <nav className="flex bg-tblue p-4 text-white">
-      <div className="flex items-center space-x-4">
+    <nav className="flex justify-center bg-tblue p-4 text-white md:justify-end">
+      <div className="flex items-center space-x-2">
         <h1 className="underline:underline duration-250 text-xl transition hover:text-gray-100 hover:text-opacity-50">
           <Link to="/">Home</Link>
         </h1>
-        <h1 className=" underline:underline duration-250 text-xl transition hover:text-gray-100 hover:text-opacity-50">
-          <Link className="btn btn-short btn-cyan" to="/signup">
+        <h1 className="underline:underline duration-250 text-xl transition hover:text-gray-100 hover:text-opacity-50">
+          <Link className="btn-short btn-black" to="/a/signup">
             Sign up
           </Link>
         </h1>
         <h1 className=" underline:underline duration-250 text-xl transition hover:text-gray-100 hover:text-opacity-50">
-          <Link className="btn btn-short btn-black" to="/login">
+          <Link className="btn-short btn-black" to="/a/login">
             Log in
           </Link>
         </h1>

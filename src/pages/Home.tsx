@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   HandThumbUpIcon,
   HeartIcon,
   PaintBrushIcon
 } from "@heroicons/react/24/solid";
 import Navbar from "../components/Navbar";
+import { FaTwitter } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Home() {
+  const [username, setUsername] = useState<string>("");
+
   const scrollTop = () => {
     document.getElementById("top")?.scrollIntoView({ behavior: "smooth" });
   };
+
   return (
     <>
       <Navbar />
@@ -18,41 +23,48 @@ export default function Home() {
         className="flex min-h-screen flex-col items-center justify-center bg-tblue font-satoshi text-white"
       >
         <section className="flex flex-col items-center space-y-4">
-          <div className="flex items-center space-x-4">
-            <svg fill="currentColor" className="h-20 w-20" viewBox="0 0 16 16">
-              <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
-            </svg>
-            <h1 className="text-8xl font-bold">Twitter Bio</h1>
+          <div className="mt-12 flex items-center space-x-4 md:mt-0">
+            <FaTwitter className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12" />
+            <h1 className="text-6xl font-bold sm:text-7xl md:text-8xl">
+              Twitter Bio
+            </h1>
           </div>
           <div className="max-w-xl rounded-xl bg-black px-6 py-2 shadow-xl">
-            <p className="animate-text bg-gradient-to-r from-tblue to-purple-500 bg-clip-text text-xl font-extrabold text-transparent">
+            <p className="animate-text bg-gradient-to-r from-tblue to-purple-500 bg-clip-text text-xs font-extrabold text-transparent sm:text-sm md:text-lg lg:text-xl">
               <span className="font-mono">Level up! </span> Take your Twitter
               bio to the next level.
             </p>
           </div>
-          <div className="flex space-x-2 text-xl text-white">
+          <div className="flex flex-col items-center space-y-1 py-6 text-sm text-white sm:text-sm md:flex-row md:space-x-2 md:py-0 md:text-lg lg:text-xl">
             <div className="rounded-lg bg-gradient-to-r from-pink-500 to-transparent p-1">
               <div className="flex h-full w-full items-center justify-center bg-tblue">
-                <div className="flex space-x-2 rounded-xl bg-inherit px-6 py-3">
+                <div className="flex space-x-2 rounded-xl bg-inherit px-2 py-2 md:px-6 md:py-3">
                   <h1>twitterbio.com/</h1>
                   <input
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
                     placeholder="yourusername"
                     className="bg-inherit text-white placeholder-white placeholder-opacity-50 focus:outline-none"
                   />
                 </div>{" "}
               </div>
             </div>
-            <button className="btn btn-white border-2 border-black">
+            <Link
+              to={`/a/signup/${username}`}
+              className="btn-short md:btn inline-flex w-full justify-center border-none bg-gray-100/10 shadow-md"
+            >
               Claim your Twitter bio
-            </button>
+            </Link>
           </div>
         </section>
-        <section className="mx-4 mt-24 flex flex-col space-y-8">
+        <section className="mx-4 mt-24 flex flex-col items-center space-y-8 md:items-start">
           <div className="flex items-center space-x-4">
-            <h1 className="text-4xl font-bold">Features you'll love </h1>
+            <h1 className="text-3xl font-bold sm:text-4xl md:text-5xl">
+              Features you'll love{" "}
+            </h1>
             <HeartIcon className="h-8 w-8 animate-pulse fill-red-500" />
           </div>
-          <div className="grid-row-2 grid grid-cols-2 gap-4">
+          <div className="md:grid-row-2 flex flex-col space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
             <FeatureCard title="Longer word limit!" icon={<HandThumbUpIcon />}>
               It's hard to describe yourself in 160 characters. Say goodbye to
               the 160 word limit for your Twitter bio!
@@ -94,9 +106,9 @@ export default function Home() {
         ></path>
       </svg>
       <div className="-m-1" />
-      <main className="bg-gray-800 font-satoshi text-white">
+      <main className="bg-gray-800 py-24 font-satoshi text-white">
         <div className="flex flex-col items-center space-y-8 p-4">
-          <h1 className="text-center text-6xl font-bold">
+          <h1 className="text-center text-2xl font-bold md:text-4xl lg:text-6xl">
             Join 100+ Twitter users to create the perfect bio!
           </h1>
           <button

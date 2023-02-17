@@ -174,6 +174,11 @@ const useFirestore = () => {
     return false;
   };
 
+  const docExists = async (id: string) => {
+    const d = await getDoc(doc(db, "users", id));
+    return d.exists();
+  };
+
   const getUserField = async (fieldValue: string) => {
     const docSnap = await getDoc(docRef);
     return docSnap.get(fieldValue);
@@ -196,7 +201,8 @@ const useFirestore = () => {
     usernameExists,
     deleteSocial,
     updateFields,
-    deleteField
+    deleteField,
+    docExists
   };
 };
 

@@ -64,13 +64,13 @@ const Preview = ({ data }: { data?: DocumentData }) => {
   if (!data) return <ImSpinner className="h-5 w-5 animate-spin fill-white" />;
 
   return (
-    <div className="min-h-md cursor flex flex-col rounded-xl border-2 border-gray-100/25 px-6 py-8 shadow-xl sm:w-[30rem] md:w-[40rem]">
+    <div className="min-h-md cursor flex flex-col rounded-xl border-2 border-gray-100/25 px-1 py-4 shadow-xl sm:w-[30rem] md:w-[40rem] md:px-6 md:py-8">
       <div className="flex flex-col items-center space-y-2">
         <img src={data.user.photoURL} className="h-10 w-10 rounded-xl" />
         <h1 className="text-4xl font-extrabold">{data.user.displayName}</h1>
         <div className="rounded-full bg-white py-[1px] px-8" />
         <div className="flex max-w-lg space-x-1">
-          {data.socials.map((field: LinkType) => {
+          {data?.socials?.map((field: LinkType) => {
             const domain = new URL(field.link).hostname
               .replace("www.", "")
               .split(".")[0];

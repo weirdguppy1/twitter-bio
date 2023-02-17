@@ -23,12 +23,15 @@ function App() {
               </RedirectRoute>
             }
           />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="a">
+            <Route path="login" element={<Login />} />
+            <Route path="signup/:username" element={<Signup />} />
+            <Route path="signup" element={<Signup />} />
+          </Route>
           <Route
-            path="/dashboard"
+            path="dashboard"
             element={
-              <PrivateRoute url="/login">
+              <PrivateRoute url="/a/login">
                 <Dashboard />
               </PrivateRoute>
             }

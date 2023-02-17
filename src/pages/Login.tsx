@@ -13,13 +13,14 @@ export default function Login() {
         id="auth"
         className="flex h-screen flex-col items-center  bg-tblue font-satoshi text-white"
       >
-        <div className="flex flex-col items-center space-y-2">
-          <span className="inline-flex rounded-full bg-tblack px-4 py-1 text-sm underline">
-            <ExclamationTriangleIcon className="mr-3 h-5 w-5 fill-yellow-300" />{" "}
+        <div className="mt-12 flex flex-col items-center space-y-2">
+          {/* <span className="inline-flex rounded-full border-2 border-gray-300 bg-white px-4 py-1 text-sm text-tblack underline">
+            <ExclamationTriangleIcon className="mr-3 h-5 w-5 fill-yellow-500" />{" "}
             in beta
-          </span>
-          <h1 className="text-6xl font-bold">Log in</h1>
+          </span> */}
+          <h1 className="text-6xl font-bold">Sign up</h1>
         </div>
+
         <button
           onClick={() => signInTwitter()}
           className="duration-250 mt-8 rounded-full px-8 py-4 text-3xl shadow-lg transition hover:opacity-75 hover:shadow-xl"

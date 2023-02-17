@@ -1,22 +1,22 @@
-import React, { Children } from "react";
+import React, { useEffect } from "react";
 import useAuthFuncs from "../hooks/useAuthFuncs";
 import Navbar from "../components/Navbar";
-import SignupInput from "../components/SignupInput";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import useFirestore from "../hooks/useFirestore";
-import toast from "react-hot-toast";
 
 export default function Signup() {
   const { signUpTwitter } = useAuthFuncs();
 
-  const { register, handleSubmit } = useForm<{ username: string }>();
-  const { usernameExists, createUser } = useFirestore();
+  const { register, handleSubmit, setValue } = useForm<{ username: string }>();
+  const { username } = useParams<{ username: string | undefined }>();
 
   const onSubmit = handleSubmit(async data => {
     signUpTwitter(data.username);
   });
+
+  useEffect(() => {
+    setValue("username", username || "");
+  }, []);
 
   return (
     <>
@@ -25,17 +25,17 @@ export default function Signup() {
         id="auth"
         className="flex h-screen flex-col items-center  bg-tblue font-satoshi text-white"
       >
-        <div className="flex flex-col items-center space-y-2">
+        <div className="mt-12 flex flex-col items-center space-y-2">
           {/* <span className="inline-flex rounded-full border-2 border-gray-300 bg-white px-4 py-1 text-sm text-tblack underline">
             <ExclamationTriangleIcon className="mr-3 h-5 w-5 fill-yellow-500" />{" "}
             in beta
           </span> */}
           <h1 className="text-6xl font-bold">Sign up</h1>
         </div>
-        <div className="flex max-w-xl flex-col items-center">
-          <form onSubmit={onSubmit} className="mt-20">
-            <div className="flex space-x-2 text-xl text-white">
-              <div className="rounded-lg bg-gradient-to-r from-pink-500 to-transparent p-1">
+        <div className="flex max-w-xl flex-col items-center ">
+          <form onSubmit={onSubmit} className="mt-5">
+            <div className="flex space-x-2 text-sm text-white sm:text-base md:text-lg lg:text-xl">
+              <div className="rounded-lg bg-gradient-to-r from-pink-500 to-transparent sm:p-1">
                 <div className="flex h-full w-full items-center justify-center bg-tblue">
                   <div className="flex space-x-2 rounded-xl bg-inherit px-6 py-3">
                     <h1>twitterbio.com/</h1>
@@ -56,7 +56,7 @@ export default function Signup() {
             <button
               type="submit"
               onClick={onSubmit}
-              className="duration-250 mt-8 w-full rounded-full border-2 border-gray-200 px-8 py-4 text-3xl shadow-lg transition hover:opacity-75 hover:shadow-xl"
+              className=" duration-250 mt-2 w-full rounded-full border-2 border-gray-200 px-3 py-1 text-xl shadow-lg transition hover:opacity-75 hover:shadow-xl md:mt-4 md:py-2"
             >
               <div className="flex items-center justify-center space-x-2">
                 <h1 className="font-bold">Sign up with </h1>
