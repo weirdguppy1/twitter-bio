@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import BioField from "../components/BioLink/BioField";
 import BioLink from "../components/BioLink/BioLink";
 import useFirestore, { FieldType, LinkFieldType } from "../hooks/useFirestore";
+import Logo from "../assets/images/logo.png";
+import PageEnd from "../components/PageEnd";
 
 const Bio = () => {
   const { getUserFromUsername } = useFirestore();
@@ -18,7 +20,6 @@ const Bio = () => {
       getUserFromUsername(username).then(value => {
         if (value) setData(value);
         setLoading(false);
-        console.log(value);
       });
     }
   }, []);
@@ -26,8 +27,9 @@ const Bio = () => {
   if (loading) return <ImSpinner className="h-5 w-5 animate-spin fill-white" />;
   if (!data)
     return (
-      <div className="flex h-screen flex-col items-center justify-center bg-tblue text-white">
-        <h1>User not found!</h1>
+      <div className="flex h-screen flex-col items-center justify-center space-y-8 bg-tblue text-white">
+        <h1 className="text-3xl font-extrabold">Could not find user...</h1>
+        <PageEnd />
       </div>
     );
 
@@ -57,11 +59,15 @@ const Bio = () => {
           })} */}
           </div>
           <div className="flex w-[35rem] flex-col items-start space-y-4">
-            <BioField bio content={data.bio} title="Bio" id="bio" />
+            <BioField
+              bio
+              content={data.bio === "" ? data.bio : "No bio."}
+              title="Bio"
+              id="bio"
+            />
             {data.fields.map((field: FieldType) => {
               return (
                 <BioField
-                  bio
                   content={field.content}
                   title={field.title}
                   key={field.id}
@@ -73,7 +79,12 @@ const Bio = () => {
           <div className="mt-10 flex w-[35rem] flex-col space-y-5">
             {data.links.map((link: LinkFieldType) => {
               return (
-                <BioLink link={link.link} title={link.title} id={link.id} />
+                <BioLink
+                  key={link.id}
+                  link={link.link}
+                  title={link.title}
+                  id={link.id}
+                />
               );
             })}
           </div>

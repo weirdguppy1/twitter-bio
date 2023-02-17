@@ -18,41 +18,39 @@ const DashNav = () => {
   const [user] = useAuthState(auth);
 
   return (
-    <>
-      <nav className="bg-tblack p-2 text-white">
-        <div className="flex items-center justify-between px-8">
-          <div>
-            <div className="rounded-xl fill-white p-2.5 text-white">
-              <img
-                src={logo}
-                className="h-10 w-10 rounded-xl fill-white text-white"
-              />
-              {/* <Logo /> */}
-            </div>
-          </div>
-          <div className="flex items-center space-x-2">
-            <ShareDropdown
-              activator={
-                <button className="btn btn-white py-2 px-6 font-bold text-black">
-                  <div className="md:text-md flex items-center space-x-2 text-sm">
-                    <span className="">Share</span>
-                    <ShareIcon className="h-5 w-5" />
-                  </div>
-                </button>
-              }
+    <nav className="bg-black p-2 text-white">
+      <div className="flex items-center justify-between px-8">
+        <div>
+          <div className="rounded-xl fill-white p-2.5 text-white">
+            <img
+              src={logo}
+              className="h-10 w-10 rounded-xl fill-white text-white"
             />
-            <UserDropdown
-              activator={
-                <img
-                  src={user?.photoURL || ""}
-                  className="duration-250 h-10 w-10 rounded-full border-2 border-gray-800 transition hover:cursor-pointer hover:border-gray-700 sm:h-12 sm:w-12"
-                />
-              }
-            />
+            {/* <Logo /> */}
           </div>
         </div>
-      </nav>
-    </>
+        <div className="flex items-center space-x-2">
+          <ShareDropdown
+            activator={
+              <button className="btn btn-white py-2 px-6 font-bold text-black">
+                <div className="md:text-md flex items-center space-x-2 text-sm">
+                  <span className="">Share</span>
+                  <ShareIcon className="h-5 w-5" />
+                </div>
+              </button>
+            }
+          />
+          <UserDropdown
+            activator={
+              <img
+                src={user?.photoURL || ""}
+                className="duration-250 h-10 w-10 rounded-full border-2 border-gray-800 transition hover:cursor-pointer hover:border-gray-700 sm:h-12 sm:w-12"
+              />
+            }
+          />
+        </div>
+      </div>
+    </nav>
   );
 };
 

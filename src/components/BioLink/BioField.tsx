@@ -10,7 +10,7 @@ const BioField = (props: {
     <div
       className={clsx(
         "mt-4 flex flex-col space-y-4 border-2 border-transparent p-4",
-        !props.bio && "rounded-xl hover:border-gray-200/10"
+        !props.bio && "rounded-xl"
       )}
     >
       <div className={clsx("flex items-start", !props.bio && "space-x-4")}>
