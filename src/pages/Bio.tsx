@@ -12,25 +12,34 @@ import useFirestore, {
 import Logo from "../assets/images/logo.png";
 import PageEnd from "../components/PageEnd";
 import BioSocial from "../components/BioLink/BioSocial";
+import clsx from "clsx";
 
 const Bio = () => {
-  const { getUserFromUsername } = useFirestore();
+  const { getUserFromUsername, usernameExists } = useFirestore();
   const [data, setData] = useState<DocumentData>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [userFound, setUserFound] = useState<boolean>(true);
+  const [show, setShow] = useState<boolean>(false);
+
   const { username } = useParams<{ username: string }>();
 
   useEffect(() => {
     if (username) {
       setLoading(true);
-      getUserFromUsername(username).then(value => {
-        if (value) setData(value);
-        setLoading(false);
+      usernameExists(username).then(value => {
+        setUserFound(value);
+        if (value) {
+          getUserFromUsername(username).then(value => {
+            if (value) setData(value);
+            setLoading(false);
+            setShow(true);
+          });
+        }
       });
     }
   }, []);
 
-  if (loading) return <ImSpinner className="h-5 w-5 animate-spin fill-white" />;
-  if (!data)
+  if (!userFound)
     return (
       <div className="flex h-screen flex-col items-center justify-center space-y-8 bg-tblue p-12 text-white">
         <h1 className="text-2xl font-extrabold sm:text-3xl md:text-5xl">
@@ -40,14 +49,26 @@ const Bio = () => {
       </div>
     );
 
+  if (loading)
+    return (
+      <div className="flex h-screen flex-col items-center justify-center bg-tblue">
+        <ImSpinner className="h-5 w-5 animate-spin fill-white" />
+      </div>
+    );
+
   return (
     <div className="min-h-screen bg-tblue py-24 text-white">
       <div className="min-h-md cursor flex flex-col rounded-xl">
-        <div className="flex flex-col items-center space-y-2">
-          <img src={data.user.photoURL} className="h-15 w-15 rounded-xl" />
-          <h1 className="text-4xl font-extrabold">{data.user.displayName}</h1>
+        <div
+          className={clsx(
+            "items-center space-y-2",
+            show ? "flex flex-col" : "hidden"
+          )}
+        >
+          <img src={data?.user.photoURL} className="h-15 w-15 rounded-xl" />
+          <h1 className="text-4xl font-extrabold">{data?.user.displayName}</h1>
           <h1 className="text-2xl font-extrabold text-gray-100/50">
-            @{data.username}
+            @{data?.username}
           </h1>
           <div className="rounded-full bg-white py-[1px] px-8" />
           <div className="flex max-w-lg space-x-1">
@@ -61,7 +82,7 @@ const Bio = () => {
             })}
           </div>
           <div className="flex w-[35rem] flex-col items-start space-y-1">
-            <BioField bio content={data.bio} title="Bio" id="bio" />
+            <BioField bio content={data?.bio} title="Bio" id="bio" />
             {data?.fields?.map((field: FieldType) => {
               return (
                 <BioField

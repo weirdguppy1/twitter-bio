@@ -128,7 +128,6 @@ function UserDropdown(props: { activator: React.ReactNode }) {
 }
 
 function ShareDropdown(props: { activator: React.ReactNode }) {
-  const { signOutUser } = useAuthFuncs();
   const { getUserField } = useFirestore();
   const [username, setUsername] = useState<string>();
 
@@ -161,7 +160,7 @@ function ShareDropdown(props: { activator: React.ReactNode }) {
             <Menu.Item>
               {({ active }) => (
                 <a
-                  href={username || "dashboard"}
+                  href={`/${username}` || "/a/dashboard"}
                   target="_blank"
                   className={`${
                     active ? "bg-tblue text-white" : "text-gray-900"

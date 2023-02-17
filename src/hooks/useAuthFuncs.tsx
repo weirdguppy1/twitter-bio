@@ -30,7 +30,7 @@ const useAuthFuncs = () => {
             const secret = credential?.secret;
             setToken(t);
             setSecret(secret);
-            navigate("/dashboard");
+            navigate("/a/dashboard");
           }
         });
       })
@@ -69,7 +69,7 @@ const useAuthFuncs = () => {
         const secret = credential?.secret;
         setToken(t);
         setSecret(secret);
-        navigate("/dashboard");
+        navigate("/a/dashboard");
       })
       .catch(error => {
         const errorCode = error.code;

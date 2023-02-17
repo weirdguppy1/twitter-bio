@@ -18,7 +18,7 @@ function App() {
           <Route
             path="/"
             element={
-              <RedirectRoute url="/dashboard">
+              <RedirectRoute url="/a/dashboard">
                 <Home />
               </RedirectRoute>
             }
@@ -27,15 +27,15 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup/:username" element={<Signup />} />
             <Route path="signup" element={<Signup />} />
+            <Route
+              path="dashboard"
+              element={
+                <PrivateRoute url="/a/login">
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
           </Route>
-          <Route
-            path="dashboard"
-            element={
-              <PrivateRoute url="/a/login">
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
           <Route path="/:username" element={<Bio />} />
         </Routes>
       </Layout>
