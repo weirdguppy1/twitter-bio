@@ -18,16 +18,16 @@ const BioCreator = () => {
   if (loading) return <ImSpinner className="h-5 w-5 animate-spin fill-white" />;
 
   return (
-    <div className="flex w-full max-w-md flex-col items-center px-2 py-8 sm:px-0">
+    <div className="flex w-full max-w-md flex-col items-center px-2 sm:px-0">
       <Tab.Group>
-        <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+        <Tab.List className="flex w-screen space-x-1 bg-blue-900/20 p-1 sm:w-full sm:rounded-xl">
           <Tab
             className={({ selected }) =>
               clsx(
-                "w-full rounded-lg px-8 py-2.5 text-sm font-medium leading-5 text-tblue",
+                "w-full rounded-lg px-8 py-2.5 text-sm font-medium leading-5 ",
                 "ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2",
                 selected
-                  ? "bg-white shadow"
+                  ? "bg-white/25 shadow"
                   : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
               )
             }
@@ -37,7 +37,7 @@ const BioCreator = () => {
           <Tab
             className={({ selected }) =>
               clsx(
-                "w-full rounded-lg px-8 py-2.5 text-sm font-medium leading-5 text-tblue",
+                "w-full rounded-lg px-8 py-2.5 text-sm font-medium leading-5 ",
                 "ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2",
                 selected
                   ? "bg-white shadow"
@@ -49,13 +49,9 @@ const BioCreator = () => {
           </Tab>
         </Tab.List>
         <Tab.Panels>
-          <Tab.Panel className="mt-20 flex flex-col items-center xl:flex-row xl:items-start xl:space-x-12">
-            <>
-              <div className="">
-                <Preview data={data} />
-              </div>
-              <ContentCreator data={data} />
-            </>
+          <Tab.Panel className="mt-4 flex flex-col items-center sm:mt-6 md:mt-8 lg:mt-10 xl:mt-12 xl:flex-row xl:items-start xl:space-x-12">
+            <Preview data={data} />
+            <ContentCreator data={data} />
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>

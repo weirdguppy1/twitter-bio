@@ -38,7 +38,7 @@ export default function Signup() {
               <div className="rounded-lg bg-gradient-to-r from-pink-500 to-transparent sm:p-1">
                 <div className="flex h-full w-full items-center justify-center bg-tblue">
                   <div className="flex space-x-2 rounded-xl bg-inherit px-6 py-3">
-                    <h1>twitterbio.com/</h1>
+                    <h1>coolbio.com/</h1>
                     <input
                       autoComplete="off"
                       type="text"

@@ -24,22 +24,22 @@ export default function Home() {
       >
         <section className="flex flex-col items-center space-y-4">
           <div className="mt-12 flex items-center space-x-4 md:mt-0">
-            <FaTwitter className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12" />
+            {/* <FaTwitter className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12" /> */}
             <h1 className="text-6xl font-bold sm:text-7xl md:text-8xl">
-              Twitter Bio
+              Bio Link
             </h1>
           </div>
           <div className="max-w-xl rounded-xl bg-black px-6 py-2 shadow-xl">
             <p className="animate-text bg-gradient-to-r from-tblue to-purple-500 bg-clip-text text-xs font-extrabold text-transparent sm:text-sm md:text-lg lg:text-xl">
-              <span className="font-mono">Level up! </span> Take your Twitter
-              bio to the next level.
+              <span className="font-mono">Level up! </span> Take your social
+              media bio to the next level.
             </p>
           </div>
           <div className="flex flex-col items-center space-y-1 py-6 text-sm text-white sm:text-sm md:flex-row md:space-x-2 md:py-0 md:text-lg lg:text-xl">
             <div className="rounded-lg bg-gradient-to-r from-pink-500 to-transparent p-1">
               <div className="flex h-full w-full items-center justify-center bg-tblue">
                 <div className="flex space-x-2 rounded-xl bg-inherit px-2 py-2 md:px-6 md:py-3">
-                  <h1>twitterbio.com/</h1>
+                  <h1>coolerbio.com/</h1>
                   <input
                     value={username}
                     onChange={e => setUsername(e.target.value)}
@@ -53,7 +53,7 @@ export default function Home() {
               to={`/a/signup/${username}`}
               className="btn-short md:btn inline-flex w-full justify-center border-none bg-gray-100/10 shadow-md"
             >
-              Claim your Twitter bio
+              Claim your username
             </Link>
           </div>
         </section>
@@ -65,12 +65,14 @@ export default function Home() {
             <HeartIcon className="h-8 w-8 animate-pulse fill-red-500" />
           </div>
           <div className="md:grid-row-2 flex flex-col space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
-            <FeatureCard title="Longer word limit!" icon={<HandThumbUpIcon />}>
-              It's hard to describe yourself in 160 characters. Say goodbye to
-              the 160 word limit for your Twitter bio!
+            <FeatureCard title="No word limit!" icon={<HandThumbUpIcon />}>
+              It's hard to describe yourself in 100+ characters or less. Say
+              goodbye to the word limits in Instagram, Twitter, and other
+              socials.
             </FeatureCard>
             <FeatureCard title="Customization" icon={<PaintBrushIcon />}>
-              Customize your Twitter bio link with different themes and colors!
+              Customize your link with different themes and colors to fit your
+              need!
             </FeatureCard>
             <FeatureCard
               title="Add fields + Socials"
@@ -89,7 +91,7 @@ export default function Home() {
               }
             >
               Use and prompt artificial intelligence to help you create the
-              perfect bio for your Twitter.
+              perfect bio for your social media.
             </FeatureCard>
           </div>
         </section>
@@ -106,10 +108,10 @@ export default function Home() {
         ></path>
       </svg>
       <div className="-m-1" />
-      <main className="bg-gray-800 py-24 font-satoshi text-white">
+      <main className="bg-gray-800 font-satoshi text-white">
         <div className="flex flex-col items-center space-y-8 p-4">
           <h1 className="text-center text-2xl font-bold md:text-4xl lg:text-6xl">
-            Join 100+ Twitter users to create the perfect bio!
+            Join 100+ users to create the perfect bio!
           </h1>
           <button
             onClick={() => scrollTop()}

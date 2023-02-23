@@ -22,8 +22,8 @@ const ContentCreator = ({ data }: { data?: DocumentData }) => {
   }, [data]);
 
   return (
-    <div className="mt-12 flex flex-col items-start rounded-xl">
-      <div className="flex flex-col">
+    <div className="mt-4 flex flex-col items-start rounded-xl md:mt-8 xl:mt-0">
+      <div className="flex w-screen flex-col p-4 md:w-full md:p-0">
         <div className="flex flex-col space-y-2">
           <div className="flex w-full items-center space-x-2">
             <AddField />
@@ -43,7 +43,7 @@ const ContentCreator = ({ data }: { data?: DocumentData }) => {
             <textarea
               spellCheck={false}
               {...register("bio", { required: false })}
-              className="input mt-3 h-48 w-full resize-none border-none bg-inherit bg-[#109cf1] text-white placeholder-gray-100/50 sm:w-96 md:w-[40rem] md:p-4 lg:h-56 xl:h-60 xl:w-96"
+              className="input mt-3 h-48 w-full resize-none border-none bg-inherit bg-[#109cf1] text-white placeholder-gray-100/50 md:w-[40rem] md:p-4 lg:h-56 xl:h-60 xl:w-96"
               placeholder="Write your bio here with no limit..."
             />
             <button type="submit" className="btn-short btn-blue">

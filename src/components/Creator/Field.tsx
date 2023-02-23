@@ -74,7 +74,7 @@ const Field = (props: {
       <div
         style={style}
         className={clsx(
-          "mt-4 flex flex-col space-y-4 border-2 border-transparent p-4",
+          "mt-4 flex flex-col  space-y-4 border-2 border-transparent p-4",
           !props.bio && "rounded-xl hover:border-gray-200/10"
         )}
       >
