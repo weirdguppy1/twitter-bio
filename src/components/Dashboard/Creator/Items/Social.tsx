@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa";
 import clsx from "clsx";
 import { LinkIcon, TrashIcon } from "@heroicons/react/24/solid";
-import useFirestore from "../../hooks/useFirestore";
+import useFirestore from "../../../../hooks/useFirestore";
 
 const Social = (props: {
   id: string;

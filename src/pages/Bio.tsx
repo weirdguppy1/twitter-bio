@@ -109,7 +109,10 @@ const Bio = () => {
             </div>
             <Link to="/">
               <div className="flex justify-center space-x-3 rounded-xl px-6 py-3 transition hover:bg-gray-300/[0.2] hover:text-white">
-                <img src={Logo} className="h-12 w-12 rounded-xl" />
+                <img
+                  src={Logo}
+                  className="h-12 w-12 rounded-xl md:h-14 md:w-14 xl:h-16 xl:w-16"
+                />
                 <h1 className="inline-flex items-center text-sm sm:text-lg md:text-xl">
                   Upgrade your bio!
                 </h1>

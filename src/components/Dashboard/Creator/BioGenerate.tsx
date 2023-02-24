@@ -8,10 +8,10 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import React, { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
-import useFirestore from "../../hooks/useFirestore";
+import useFirestore from "../../../hooks/useFirestore";
 import { RxDragHandleDots1 } from "react-icons/rx";
 import { AiFillRobot } from "react-icons/ai";
-import { generateBio } from "../../../openai";
+import { generateBio } from "../../../../openai";
 import { ImSpinner } from "react-icons/im";
 import { toast } from "react-hot-toast";
 

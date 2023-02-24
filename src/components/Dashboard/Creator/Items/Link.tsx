@@ -4,7 +4,7 @@ import { LinkIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
 import { CSS } from "@dnd-kit/utilities";
 import React, { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
-import useFirestore from "../../hooks/useFirestore";
+import useFirestore from "../../../../hooks/useFirestore";
 import { RxDragHandleDots1 } from "react-icons/rx";
 
 type FormData = {

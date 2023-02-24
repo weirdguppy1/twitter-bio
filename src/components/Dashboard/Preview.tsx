@@ -3,12 +3,11 @@ import React, { useEffect, useState } from "react";
 import useFirestore, {
   FieldType,
   LinkFieldType,
-  LinkType,
-  UserDoc
+  LinkType
 } from "../../hooks/useFirestore";
-import Field from "../Creator/Field";
-import Social from "../Creator/Social";
-import LinkField from "../Creator/Link";
+import Field from "./Creator/Items/Field";
+import Social from "./Creator/Items/Social";
+import LinkField from "./Creator/Items/Link";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -64,9 +63,9 @@ const Preview = ({ data }: { data?: DocumentData }) => {
   if (!data) return <ImSpinner className="h-5 w-5 animate-spin fill-white" />;
 
   return (
-    <div className="min-h-md cursor flex w-screen flex-col py-4 sm:w-[30rem] md:w-[40rem] md:rounded-xl md:border-2 md:border-gray-100/25 md:px-6 md:py-8 md:shadow-xl">
+    <div className="min-h-md flex flex-col rounded-xl border-2 border-gray-100/25 py-4 px-2 shadow-xl sm:w-[30rem] md:w-[40rem] md:px-6 md:py-8">
       <div className="flex flex-col items-center space-y-2">
-        <img src={data.user.photoURL} className="h-10 w-10 rounded-xl" />
+        <img src={data.user.photoURL} className="h-10 w-10 rounded-full" />
         <h1 className="text-4xl font-extrabold">{data.user.displayName}</h1>
         <div className="rounded-full bg-white py-[1px] px-8" />
         <div className="flex max-w-lg space-x-1">
@@ -85,7 +84,6 @@ const Preview = ({ data }: { data?: DocumentData }) => {
           })}
         </div>
       </div>
-
       <div className="flex flex-col space-y-4">
         <Field bio title="Bio" content={data.bio} id="bio" />
         <DndContext

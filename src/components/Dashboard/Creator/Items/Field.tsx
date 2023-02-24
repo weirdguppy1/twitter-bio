@@ -6,7 +6,7 @@ import React, { Fragment, useState } from "react";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { useForm } from "react-hook-form";
 import { Transition, Dialog } from "@headlessui/react";
-import useFirestore from "../../hooks/useFirestore";
+import useFirestore from "../../../../hooks/useFirestore";
 
 type FormData = {
   title: string;
@@ -75,7 +75,7 @@ const Field = (props: {
       <div
         style={style}
         className={clsx(
-          "mt-4 flex flex-col  space-y-4 border-2 border-transparent p-4",
+          "mt-4 flex flex-col  space-y-4 border-2 border-transparent",
           !props.bio && "rounded-xl hover:border-gray-200/10"
         )}
       >
@@ -107,7 +107,7 @@ const Field = (props: {
                 </h1>
               </div>
             </div>
-            <p className="mx-3 mt-2 whitespace-pre-line text-lg">
+            <p className="mx-3 mt-2 whitespace-pre-line text-base sm:text-lg">
               {props.content}
             </p>
           </div>

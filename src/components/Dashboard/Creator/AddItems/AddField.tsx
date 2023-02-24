@@ -1,29 +1,29 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { DocumentIcon, LinkIcon, PlusIcon } from "@heroicons/react/24/solid";
-import { Fragment, useState } from "react";
+import { PlusIcon } from "@heroicons/react/24/solid";
+import React, { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
-import useFirestore from "../../hooks/useFirestore";
+import useFirestore from "../../../../hooks/useFirestore";
 
 type FormData = {
-  link: string;
-  title: string;
+  name: string;
+  content: string;
 };
 
-const AddLink = () => {
-  let [isOpen, setIsOpen] = useState<boolean>(false);
+const AddField = () => {
+  let [isOpen, setIsOpen] = useState(false);
+
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors }
   } = useForm<FormData>();
-  const linkRegex =
-    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
-  const { addLink } = useFirestore();
+  const { addField } = useFirestore();
 
   const onSubmit = handleSubmit(data => {
-    setValue("link", "");
-    addLink(data.link, data.title);
+    addField(data.name, data.content);
+    setValue("content", "");
+    setValue("name", "");
     closeModal();
   });
 
@@ -43,10 +43,9 @@ const AddLink = () => {
       >
         <div className="flex items-center space-x-2">
           <PlusIcon className="h-5 w-5" />
-          <span>Add Link</span>
+          <span>Add Field</span>
         </div>
       </button>
-
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
@@ -76,46 +75,39 @@ const AddLink = () => {
                     as="h3"
                     className="text-xl font-bold leading-6 text-gray-900"
                   >
-                    Add Link
+                    Add Text Field
                   </Dialog.Title>
-                  <form onSubmit={onSubmit} className="mt-2 space-y-4">
-                    <div className="flex flex-col space-y-2">
-                      <label>
-                        <div className="flex items-center space-x-1">
-                          <span>Title</span>
-                        </div>
-                      </label>
+                  <form className="mt-2 space-y-4" onSubmit={onSubmit}>
+                    <div className="flex flex-col space-y-1">
+                      <label>Field Title</label>
                       <input
-                        {...register("title", {
+                        {...register("name", {
                           required: true,
-                          maxLength: {
-                            value: 50,
-                            message: "Title too long."
-                          }
+                          maxLength: { value: 50, message: "Title too long." }
                         })}
                         className="input w-full"
-                        placeholder="Company website, personal website, etc."
-                      />
-                      <label>
-                        <div className="flex items-center space-x-1">
-                          <span>Link</span>
-                          <LinkIcon className="mr-2 h-5 w-5 fill-black" />
-                        </div>
-                      </label>
-                      <input
-                        {...register("link", {
-                          required: true,
-                          pattern: linkRegex
-                        })}
-                        className="input w-full"
-                        placeholder="https://google.com, etc."
+                        placeholder="Job, Hobbies, etc."
                       />
                     </div>
-                    {errors.link && (
-                      <h1 className="text-red-500">Not valid link.</h1>
+                    <div className="flex flex-col space-y-1">
+                      <label>Field Content</label>
+                      <textarea
+                        {...register("content", {
+                          required: true,
+                          maxLength: {
+                            value: 2000,
+                            message: "Content too long."
+                          }
+                        })}
+                        className="input h-24 w-full resize-none"
+                        placeholder="Content for text field..."
+                      />
+                    </div>
+                    {errors.name && (
+                      <h1 className="text-red-500">{errors.name.message}</h1>
                     )}
-                    {errors.title && (
-                      <h1 className="text-red-500">{errors.title.message}</h1>
+                    {errors.content && (
+                      <h1 className="text-red-500">{errors.content.message}</h1>
                     )}
                     <div className="mt-4 space-x-2">
                       <button
@@ -143,4 +135,4 @@ const AddLink = () => {
   );
 };
 
-export default AddLink;
+export default AddField;

@@ -1,37 +1,29 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { GlobeAltIcon, LinkIcon } from "@heroicons/react/24/solid";
+import { DocumentIcon, LinkIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  FaFacebook,
-  FaGithub,
-  FaInstagram,
-  FaSpotify,
-  FaTiktok,
-  FaTwitter,
-  FaYoutube
-} from "react-icons/fa";
-import useFirestore from "../../hooks/useFirestore";
+import useFirestore from "../../../../hooks/useFirestore";
 
 type FormData = {
   link: string;
+  title: string;
 };
 
-const AddSocial = () => {
+const AddLink = () => {
   let [isOpen, setIsOpen] = useState<boolean>(false);
-  const linkRegex =
-    /^(https?:\/\/)?(www\.)?(instagram|twitter|facebook|tiktok|github|(open\.)?spotify|youtube)\.(com|me|io)\/[A-Za-z0-9._]+\/?$/;
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors }
   } = useForm<FormData>();
-  const { addSocial } = useFirestore();
+  const linkRegex =
+    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+  const { addLink } = useFirestore();
 
   const onSubmit = handleSubmit(data => {
     setValue("link", "");
-    addSocial(data.link);
+    addLink(data.link, data.title);
     closeModal();
   });
 
@@ -46,12 +38,12 @@ const AddSocial = () => {
   return (
     <>
       <button
+        className="btn-short btn-white w-full border-none font-semibold"
         onClick={openModal}
-        className="btn-short w-full animate-text border-none  bg-gradient-to-r from-purple-500 to-red-500 font-semibold"
       >
         <div className="flex items-center space-x-2">
-          <GlobeAltIcon className="h-5 w-5" />
-          <span>Add Socials</span>
+          <PlusIcon className="h-5 w-5" />
+          <span>Add Link</span>
         </div>
       </button>
 
@@ -84,43 +76,47 @@ const AddSocial = () => {
                     as="h3"
                     className="text-xl font-bold leading-6 text-gray-900"
                   >
-                    <span>Add Social</span>
+                    Add Link
                   </Dialog.Title>
-                  <div className="flex flex-col space-y-2">
-                    <h1>Supports:</h1>
-                    <div className="flex items-center space-x-1">
-                      <FaInstagram className="h-6 w-6 fill-purple-500" />
-                      <FaTwitter className="h-6 w-6 fill-tblue" />
-                      <FaTiktok className="h-6 w-6" />
-                      <FaYoutube className="h-6 w-6 fill-red-500" />
-                      <FaGithub className="h-6 w-6 fill-black" />
-                      <FaFacebook className="h-6 w-6 fill-blue-500" />
-                      <FaSpotify className="h-6 w-6 fill-green-600" />
-                    </div>
-                  </div>
-                  <form onSubmit={onSubmit} className="mt-6 space-y-4">
-                    <div className="flex flex-col space-y-1">
+                  <form onSubmit={onSubmit} className="mt-2 space-y-4">
+                    <div className="flex flex-col space-y-2">
                       <label>
                         <div className="flex items-center space-x-1">
-                          <span>Social Link</span>
+                          <span>Title</span>
+                        </div>
+                      </label>
+                      <input
+                        {...register("title", {
+                          required: true,
+                          maxLength: {
+                            value: 50,
+                            message: "Title too long."
+                          }
+                        })}
+                        className="input w-full"
+                        placeholder="Company website, personal website, etc."
+                      />
+                      <label>
+                        <div className="flex items-center space-x-1">
+                          <span>Link</span>
                           <LinkIcon className="mr-2 h-5 w-5 fill-black" />
                         </div>
                       </label>
-                      <div className="flex flex-col items-center space-y-2">
-                        <input
-                          {...register("link", {
-                            required: true,
-                            pattern: linkRegex
-                          })}
-                          className="input w-full"
-                          type="text"
-                          placeholder="https://instagram.com/username, etc."
-                        />
-                        {errors.link && (
-                          <h1 className="text-red-500">Not valid url.</h1>
-                        )}
-                      </div>
+                      <input
+                        {...register("link", {
+                          required: true,
+                          pattern: linkRegex
+                        })}
+                        className="input w-full"
+                        placeholder="https://google.com, etc."
+                      />
                     </div>
+                    {errors.link && (
+                      <h1 className="text-red-500">Not valid link.</h1>
+                    )}
+                    {errors.title && (
+                      <h1 className="text-red-500">{errors.title.message}</h1>
+                    )}
                     <div className="mt-4 space-x-2">
                       <button
                         type="submit"
@@ -130,7 +126,7 @@ const AddSocial = () => {
                       </button>
                       <button
                         type="button"
-                        className="btn-short font-bold"
+                        className="btn-short"
                         onClick={closeModal}
                       >
                         Close
@@ -147,4 +143,4 @@ const AddSocial = () => {
   );
 };
 
-export default AddSocial;
+export default AddLink;

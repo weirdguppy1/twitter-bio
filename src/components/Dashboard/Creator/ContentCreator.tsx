@@ -1,12 +1,12 @@
 import { DocumentData } from "firebase/firestore";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import useFirestore from "../../hooks/useFirestore";
-import AddField from "./AddField";
-import AddLink from "./AddLink";
-import AddSocial from "./AddSocial";
+import useFirestore from "../../../hooks/useFirestore";
+import AddField from "./AddItems/AddField";
+import AddLink from "./AddItems/AddLink";
+import AddSocial from "./AddItems/AddSocial";
 import { AiFillRobot } from "react-icons/ai";
-import BioGenerate from "../Creator/BioGenerate";
+import BioGenerate from "./BioGenerate";
 
 const ContentCreator = ({ data }: { data?: DocumentData }) => {
   const { updateBio } = useFirestore();

@@ -4,8 +4,9 @@ import clsx from "clsx";
 import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import useUser from "../../hooks/useUser";
-import ContentCreator from "./ContentCreator";
+import ContentCreator from "./Creator/ContentCreator";
 import Preview from "./Preview";
+import BioDesign from "./Design/BioDesign";
 
 const BioCreator = () => {
   const [data, setData] = useState<DocumentData>();
@@ -18,9 +19,9 @@ const BioCreator = () => {
   if (loading) return <ImSpinner className="h-5 w-5 animate-spin fill-white" />;
 
   return (
-    <div className="flex w-full max-w-md flex-col items-center px-2 sm:px-0">
+    <div className="flex w-full max-w-md flex-col items-center">
       <Tab.Group>
-        <Tab.List className="flex w-screen space-x-1 bg-blue-900/20 p-1 sm:w-full sm:rounded-xl">
+        <Tab.List className="flex w-screen space-x-2 bg-blue-900/20 p-1 sm:w-full sm:rounded-xl">
           <Tab
             className={({ selected }) =>
               clsx(
@@ -49,9 +50,17 @@ const BioCreator = () => {
           </Tab>
         </Tab.List>
         <Tab.Panels>
-          <Tab.Panel className="mt-4 flex flex-col items-center sm:mt-6 md:mt-8 lg:mt-10 xl:mt-12 xl:flex-row xl:items-start xl:space-x-12">
-            <Preview data={data} />
+          <Tab.Panel className="mt-2 flex flex-col items-center sm:mt-6 md:mt-8 lg:mt-10 xl:mt-12 xl:flex-row xl:items-start xl:space-x-12">
+            <div className="px-1 sm:px-0">
+              <Preview data={data} />
+            </div>
             <ContentCreator data={data} />
+          </Tab.Panel>
+          <Tab.Panel className="mt-2 flex flex-col items-center sm:mt-6 md:mt-8 lg:mt-10 xl:mt-12 xl:flex-row xl:items-start xl:space-x-12">
+            {/* <div className="px-1 sm:px-0">
+              <Preview data={data} />
+            </div> */}
+            <BioDesign />
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
