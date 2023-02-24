@@ -29,10 +29,10 @@ export default function Home() {
               Bio Link
             </h1>
           </div>
-          <div className="max-w-xl rounded-xl bg-black px-6 py-2 shadow-xl">
+          <div className="rounded-xl bg-black px-6 py-2 shadow-xl">
             <p className="animate-text bg-gradient-to-r from-tblue to-purple-500 bg-clip-text text-xs font-extrabold text-transparent sm:text-sm md:text-lg lg:text-xl">
-              <span className="font-mono">Level up! </span> Take your social
-              media bio to the next level.
+              <span className="font-mono">Level up! </span> Upgrade your social
+              media bio.
             </p>
           </div>
           <div className="flex flex-col items-center space-y-1 py-6 text-sm text-white sm:text-sm md:flex-row md:space-x-2 md:py-0 md:text-lg lg:text-xl">

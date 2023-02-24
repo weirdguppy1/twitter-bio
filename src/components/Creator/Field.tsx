@@ -64,9 +64,10 @@ const Field = (props: {
     deleteField(props.id);
   };
 
-  const style = {
+  const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform && { ...transform, scaleY: 1 }),
-    transition
+    transition,
+    touchAction: "none"
   };
 
   return (

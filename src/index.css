@@ -84,3 +84,7 @@
   --font-family: "Satoshi";
   width: "20px";
 } */
+
+body {
+  background-color: black;
+}

@@ -29,9 +29,10 @@ const Link = (props: { link: string; title: string; id: string }) => {
     defaultValues: { title: props.title, link: props.link }
   });
 
-  const style = {
+  const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform && { ...transform, scaleY: 1 }),
-    transition
+    transition,
+    touchAction: "none"
   };
 
   const onSubmit = handleSubmit(data => {

@@ -1,7 +1,7 @@
 import { DocumentData } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { ImSpinner } from "react-icons/im";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import BioField from "../components/BioLink/BioField";
 import BioLink from "../components/BioLink/BioLink";
 import useFirestore, {
@@ -57,7 +57,7 @@ const Bio = () => {
     );
 
   return (
-    <div className="min-h-screen bg-tblue py-24 text-white">
+    <div className="min-h-screen bg-tblue py-12 px-2 text-white md:px-0">
       <div className="min-h-md cursor flex flex-col rounded-xl">
         <div
           className={clsx(
@@ -81,30 +81,40 @@ const Bio = () => {
               );
             })}
           </div>
-          <div className="flex w-[35rem] flex-col items-start space-y-1">
-            <BioField bio content={data?.bio} title="Bio" id="bio" />
-            {data?.fields?.map((field: FieldType) => {
-              return (
-                <BioField
-                  content={field.content}
-                  title={field.title}
-                  key={field.id}
-                  id={field.id}
-                />
-              );
-            })}
-          </div>
-          <div className="flex w-[35rem] flex-col space-y-1">
-            {data?.links?.map((link: LinkFieldType) => {
-              return (
-                <BioLink
-                  key={link.id}
-                  link={link.link}
-                  title={link.title}
-                  id={link.id}
-                />
-              );
-            })}
+          <div className="flex max-w-lg flex-col space-y-4">
+            <div className="flex flex-col items-start space-y-1">
+              <BioField bio content={data?.bio} title="Bio" id="bio" />
+              {data?.fields?.map((field: FieldType) => {
+                return (
+                  <BioField
+                    content={field.content}
+                    title={field.title}
+                    key={field.id}
+                    id={field.id}
+                  />
+                );
+              })}
+            </div>
+            <div className="flex flex-col space-y-1">
+              {data?.links?.map((link: LinkFieldType) => {
+                return (
+                  <BioLink
+                    key={link.id}
+                    link={link.link}
+                    title={link.title}
+                    id={link.id}
+                  />
+                );
+              })}
+            </div>
+            <Link to="/">
+              <div className="flex justify-center space-x-3 rounded-xl px-6 py-3 transition hover:bg-gray-300/[0.2] hover:text-white">
+                <img src={Logo} className="h-12 w-12 rounded-xl" />
+                <h1 className="inline-flex items-center text-sm sm:text-lg md:text-xl">
+                  Upgrade your bio!
+                </h1>
+              </div>
+            </Link>
           </div>
         </div>
       </div>

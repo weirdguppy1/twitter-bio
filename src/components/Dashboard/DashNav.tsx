@@ -9,7 +9,6 @@ import {
   ShareIcon
 } from "@heroicons/react/24/solid";
 import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import useAuthFuncs from "../../hooks/useAuthFuncs";
 import logo from "../../assets/images/logo.png";
 import useFirestore from "../../hooks/useFirestore";
@@ -19,16 +18,12 @@ const DashNav = () => {
 
   return (
     <nav className="bg-black p-2 text-white">
-      <div className="flex items-center justify-between px-8">
-        <div>
-          <div className="rounded-xl fill-white p-2.5 text-white">
-            <img
-              src={logo}
-              className="h-10 w-10 rounded-xl fill-white text-white"
-            />
-            {/* <Logo /> */}
-          </div>
-        </div>
+      <div className="flex items-center justify-between px-2 sm:px-3 md:px-4 md:py-1 lg:px-6 lg:py-2 xl:px-8 ">
+        <img
+          src={logo}
+          className="h-12 w-12 rounded-xl fill-white text-white md:h-14 md:w-14"
+        />
+        {/* <Logo /> */}
         <div className="flex items-center space-x-2">
           <ShareDropdown
             activator={
