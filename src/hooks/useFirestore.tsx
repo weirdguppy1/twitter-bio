@@ -188,6 +188,18 @@ const useFirestore = () => {
     return docSnap.get(fieldValue);
   };
 
+  const updateTheme = async (theme: string) => {
+    await updateDoc(docRef, {
+      "settings.theme": theme
+    });
+  };
+
+  const updateFont = async (font: string) => {
+    await updateDoc(docRef, {
+      "settings.font": font
+    });
+  };
+
   return {
     createUser,
     addLink,
@@ -198,6 +210,8 @@ const useFirestore = () => {
     updateLinks,
     updateBio,
     updateField,
+    updateFont,
+    updateTheme,
     getUser,
     getUserField,
     getUserFromUsername,

@@ -60,7 +60,7 @@ const BioCreator = () => {
             {/* <div className="px-1 sm:px-0">
               <Preview data={data} />
             </div> */}
-            <BioDesign />
+            <BioDesign data={data} />
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>

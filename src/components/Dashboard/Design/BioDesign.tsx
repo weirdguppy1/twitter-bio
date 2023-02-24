@@ -1,9 +1,10 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { ChevronUpDownIcon, PaintBrushIcon } from "@heroicons/react/24/solid";
+import { DocumentData } from "firebase/firestore";
 import React, { Fragment, useState } from "react";
 import { ThemePreview } from "./ThemePreview";
 
-const BioDesign = () => {
+const BioDesign = (data: { data?: DocumentData }) => {
   const themes = [
     {
       name: "Midnight",

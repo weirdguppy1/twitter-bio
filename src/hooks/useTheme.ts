@@ -6,7 +6,8 @@ import { auth, db } from "../../firebase";
 
 const useTheme = () => {
   const [user] = useAuthState(auth);
-  const [data] = useDocumentData(doc(db, "users", user?.uid || "fallback"));
+
+  const setTheme = (theme: string) => {};
 };
 
 export default useTheme;
