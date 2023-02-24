@@ -58,7 +58,11 @@ const useFirestore = () => {
       fields: [],
       bio: "",
       username: username,
-      user: user
+      user: user,
+      settings: {
+        theme: "blue",
+        font: "Satoshi"
+      }
     });
   };
 

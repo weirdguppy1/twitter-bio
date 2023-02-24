@@ -1,7 +1,8 @@
 import {
   TwitterAuthProvider,
   signInWithPopup,
-  GoogleAuthProvider
+  GoogleAuthProvider,
+  AuthProvider
 } from "firebase/auth";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
@@ -15,10 +16,9 @@ const useAuthFuncs = () => {
   const [secret, setSecret] = useState<string>();
   const { userExists, usernameExists, createUser, docExists } = useFirestore();
   const navigate = useNavigate();
+  const TwitterProvider = new TwitterAuthProvider();
 
-  const signInTwitter = async () => {
-    const provider = new TwitterAuthProvider();
-
+  const signIn = async (provider: AuthProvider) => {
     signInWithPopup(auth, provider)
       .then(result => {
         userExists(result.user.uid).then(exists => {
@@ -40,15 +40,12 @@ const useAuthFuncs = () => {
       });
   };
 
-  const signUpTwitter = async (username: string) => {
-    const provider = new TwitterAuthProvider();
+  const signUp = async (provider: AuthProvider, username: string) => {
     const username_exists = await usernameExists(username);
-
     if (username_exists) {
       toast.error("Username already exists!");
       return;
     }
-
     signInWithPopup(auth, provider)
       .then(async result => {
         const doc_exists = await docExists(result.user.uid);
@@ -76,24 +73,6 @@ const useAuthFuncs = () => {
         toast.error(`Error ${errorCode}: Trouble signing in!`);
       });
   };
-
-  const signInGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then(result => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const t = credential?.accessToken;
-        const secret = credential?.secret;
-        setToken(t);
-        setSecret(secret);
-      })
-      .catch(error => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        toast.error(`Error ${errorCode}: Trouble signing in!`);
-      });
-  };
-
   const signOutUser = () => {
     signOut(auth)
       .then(() => {
@@ -102,15 +81,17 @@ const useAuthFuncs = () => {
       })
       .catch(error => {
         const errorCode = error.code;
-        const errorMessage = error.message;
         toast.error(`Error ${errorCode}: Trouble signing in!`);
       });
   };
 
+  const signInTwitter = async () => signIn(TwitterProvider);
+  const signUpTwitter = async (username: string) =>
+    signUp(TwitterProvider, username);
+
   return {
     signInTwitter,
     signUpTwitter,
-    signInGoogle,
     signOutUser,
 
     token,

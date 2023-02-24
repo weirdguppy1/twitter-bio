@@ -11,7 +11,7 @@ export const ThemePreview = ({ style, name, linkStyle }: Props) => {
   return (
     <div
       className={clsx(
-        "flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-tblue px-24 py-8 transition duration-100 hover:border-gray-100/50",
+        "flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-transparent  px-24 py-8 transition duration-100 hover:border-gray-100/50",
         style
       )}
     >

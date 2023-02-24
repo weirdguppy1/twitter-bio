@@ -31,7 +31,7 @@ const BioDesign = () => {
   const [selected, setSelected] = useState();
 
   return (
-    <div className="rounded-xl border-2 border-gray-100/25 py-2 px-8 shadow-md">
+    <div className="py-2 px-8">
       <div className="flex flex-col space-y-4 md:space-y-8">
         <h1 className="inline-flex items-center space-x-2 text-3xl font-extrabold md:text-4xl">
           <span>Design</span>
