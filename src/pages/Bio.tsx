@@ -13,13 +13,16 @@ import Logo from "../assets/images/logo.png";
 import PageEnd from "../components/PageEnd";
 import BioSocial from "../components/BioLink/BioSocial";
 import clsx from "clsx";
+import useTheme, { ThemeType } from "../hooks/useTheme";
 
 const Bio = () => {
   const { getUserFromUsername, usernameExists } = useFirestore();
+  const { getTheme } = useTheme();
   const [data, setData] = useState<DocumentData>();
   const [loading, setLoading] = useState<boolean>(false);
   const [userFound, setUserFound] = useState<boolean>(true);
   const [show, setShow] = useState<boolean>(false);
+  const [themeValue, setThemeValue] = useState<ThemeType>();
 
   const { username } = useParams<{ username: string }>();
 
@@ -30,7 +33,11 @@ const Bio = () => {
         setUserFound(value);
         if (value) {
           getUserFromUsername(username).then(value => {
-            if (value) setData(value);
+            if (value) {
+              setThemeValue(getTheme(value?.settings?.theme));
+              setData(value);
+              console.log(themeValue);
+            }
             setLoading(false);
             setShow(true);
           });
@@ -57,7 +64,7 @@ const Bio = () => {
     );
 
   return (
-    <div className="min-h-screen bg-tblue py-12 px-2 text-white md:px-0">
+    <div className={clsx("min-h-screen py-12 px-2 md:px-0", themeValue?.style)}>
       <div className="min-h-md cursor flex flex-col rounded-xl">
         <div
           className={clsx(
@@ -67,9 +74,7 @@ const Bio = () => {
         >
           <img src={data?.user.photoURL} className="h-15 w-15 rounded-xl" />
           <h1 className="text-4xl font-extrabold">{data?.user.displayName}</h1>
-          <h1 className="text-2xl font-extrabold text-gray-100/50">
-            @{data?.username}
-          </h1>
+          <h1 className="text-2xl font-extrabold">@{data?.username}</h1>
           <div className="rounded-full bg-white py-[1px] px-8" />
           <div className="min-w-md flex max-w-md space-x-1">
             {data?.socials?.map((social: LinkType) => {
@@ -81,7 +86,7 @@ const Bio = () => {
               );
             })}
           </div>
-          <div className="min-w-md flex max-w-md flex-col space-y-4">
+          <div className="min-w-md flex max-w-md flex-col space-y-4 px-8 sm:px-0">
             <div className="flex flex-col items-start space-y-1">
               <BioField bio content={data?.bio} title="Bio" id="bio" />
               {data?.fields?.map((field: FieldType) => {
@@ -99,6 +104,7 @@ const Bio = () => {
               {data?.links?.map((link: LinkFieldType) => {
                 return (
                   <BioLink
+                    linkStyle={themeValue?.linkStyle || ""}
                     key={link.id}
                     link={link.link}
                     title={link.title}

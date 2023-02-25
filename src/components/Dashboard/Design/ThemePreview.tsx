@@ -15,7 +15,9 @@ export const ThemePreview = ({ style, name, linkStyle, selected }: Props) => {
 
   return (
     <div
-      onClick={() => updateTheme(name)}
+      onClick={() => {
+        if (!selected) updateTheme(name);
+      }}
       className={clsx(
         "rounded-lg border-2 p-1.5",
         selected ? "border-blue-500" : "border-transparent"
@@ -23,7 +25,8 @@ export const ThemePreview = ({ style, name, linkStyle, selected }: Props) => {
     >
       <div
         className={clsx(
-          "flex h-40 cursor-pointer flex-col items-center rounded-lg border-2 border-gray-900/25 px-6 pt-4 transition duration-100 hover:scale-[1.03]",
+          "flex h-40 cursor-pointer flex-col items-center rounded-lg border-2 border-gray-900/25 px-6 pt-4 transition duration-100",
+          !selected && "hover:scale-[1.03]",
           style
         )}
       >

@@ -15,11 +15,17 @@ import {
   verticalListSortingStrategy
 } from "@dnd-kit/sortable";
 import { ImSpinner } from "react-icons/im";
+import useTheme, { ThemeNameType, ThemeType } from "../../hooks/useTheme";
+import clsx from "clsx";
 
 const Preview = ({ data }: { data?: DocumentData }) => {
+  const { updateFields, updateLinks } = useFirestore();
+  const { getTheme } = useTheme();
+
   const [fields, setFields] = useState<FieldType[]>([]);
   const [links, setLinks] = useState<LinkFieldType[]>([]);
-  const { updateFields, updateLinks } = useFirestore();
+  const [theme, setTheme] = useState<ThemeNameType>("Blue");
+  const [themeData, setThemeData] = useState<ThemeType>();
 
   const handleFieldsDrag = (event: any) => {
     const { active, over } = event;
@@ -60,14 +66,28 @@ const Preview = ({ data }: { data?: DocumentData }) => {
     if (data?.links) setLinks(data?.links);
   }, [data]);
 
+  useEffect(() => {
+    if (data?.settings) {
+      setTheme(data?.settings.theme);
+      setThemeData(getTheme(data?.settings.theme));
+    }
+  }, [data?.settings]);
+
   if (!data) return <ImSpinner className="h-5 w-5 animate-spin fill-white" />;
 
   return (
-    <div className="min-h-md flex flex-col rounded-xl border-2 border-gray-100/25 py-4 px-2 shadow-xl sm:w-[30rem] md:w-[40rem] md:px-6 md:py-8">
+    <div
+      className={clsx(
+        "min-h-md flex flex-col rounded-xl border-2 border-gray-100/[0.15] py-4 px-2 shadow-md sm:w-[30rem] md:w-[40rem] md:px-6 md:py-8 xl:w-[35rem]",
+        themeData?.style
+      )}
+    >
       <div className="flex flex-col items-center space-y-2">
         <img src={data.user.photoURL} className="h-10 w-10 rounded-full" />
         <h1 className="text-4xl font-extrabold">{data.user.displayName}</h1>
-        <div className="rounded-full bg-white py-[1px] px-8" />
+        <div
+          className={clsx("rounded-full py-[1px] px-8", themeData?.linkStyle)}
+        />
         <div className="flex max-w-lg space-x-1">
           {data?.socials?.map((field: LinkType) => {
             const domain = new URL(field.link).hostname
@@ -114,6 +134,7 @@ const Preview = ({ data }: { data?: DocumentData }) => {
             {links.map((link: LinkFieldType) => {
               return (
                 <LinkField
+                  linkStyle={themeData?.linkStyle || ""}
                   title={link.title}
                   link={link.link}
                   key={link.id}

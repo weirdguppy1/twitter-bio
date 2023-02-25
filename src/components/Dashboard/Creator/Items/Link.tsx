@@ -6,13 +6,19 @@ import React, { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
 import useFirestore from "../../../../hooks/useFirestore";
 import { RxDragHandleDots1 } from "react-icons/rx";
+import clsx from "clsx";
 
 type FormData = {
   title: string;
   link: string;
 };
 
-const Link = (props: { link: string; title: string; id: string }) => {
+const Link = (props: {
+  link: string;
+  title: string;
+  id: string;
+  linkStyle: string;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -74,14 +80,19 @@ const Link = (props: { link: string; title: string; id: string }) => {
             {...listeners}
             className="rotate-90"
           >
-            <RxDragHandleDots1 className="h-6 w-6 fill-white" />
+            <RxDragHandleDots1 className="h-6 w-6" />
           </div>
           <button onClick={openModal}>
-            <PencilSquareIcon className="h-5 w-5 fill-white" />
+            <PencilSquareIcon className="h-5 w-5" />
           </button>
         </div>
         <a target="_blank" href={props.link}>
-          <div className="duration-250 mt-2 flex items-center space-x-4 rounded-2xl bg-white px-2 py-3 text-black shadow-lg transition hover:scale-[1.02] hover:shadow-xl">
+          <div
+            className={clsx(
+              "duration-250 mt-2 flex items-center space-x-4 rounded-2xl px-2 py-3 text-black shadow-lg transition hover:scale-[1.02] hover:shadow-xl",
+              props.linkStyle
+            )}
+          >
             <div className="rounded-full bg-black p-2">
               <LinkIcon className="h-5 w-5 fill-white" />
             </div>

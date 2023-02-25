@@ -48,7 +48,7 @@ export interface UserDoc {
   user: UserInfo;
 }
 
-type Theme = "Midnight" | "Honey" | "Pinkout" | "Emerald";
+type ThemeName = "Midnight" | "Honey" | "Pinkout" | "Emerald" | "Blue";
 
 const useFirestore = () => {
   const [user] = useAuthState(auth);
@@ -190,7 +190,7 @@ const useFirestore = () => {
     return docSnap.get(fieldValue);
   };
 
-  const updateTheme = async (theme: string) => {
+  const updateTheme = async (theme: ThemeName) => {
     await updateDoc(docRef, {
       "settings.theme": theme
     });

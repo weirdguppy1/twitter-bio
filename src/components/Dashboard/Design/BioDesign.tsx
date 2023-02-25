@@ -2,40 +2,12 @@ import { Listbox, Transition } from "@headlessui/react";
 import { ChevronUpDownIcon, PaintBrushIcon } from "@heroicons/react/24/solid";
 import { DocumentData } from "firebase/firestore";
 import React, { Fragment, useEffect, useState } from "react";
+import useTheme from "../../../hooks/useTheme";
 import { ThemePreview } from "./ThemePreview";
-
-const themes = [
-  {
-    name: "Midnight",
-    style: "text-white bg-tblack",
-    linkStyle: "bg-gray-800"
-  },
-  {
-    name: "Blue",
-    style: "text-white bg-tblue",
-    linkStyle: "bg-white"
-  },
-  {
-    name: "Honey",
-    style: "text-black bg-yellow-400",
-    linkStyle: "bg-gray-100"
-  },
-  {
-    name: "Emerald",
-    style: "text-white bg-emerald-500 font-extrabold",
-    linkStyle: "border-2 border-gray-100/25"
-  },
-  {
-    name: "Pinkout",
-    style:
-      "text-white font-extrabold bg-gradient-to-tr from-pink-500 to-purple-500",
-    linkStyle: "bg-gray-100/25"
-  }
-];
 
 const BioDesign = (data: { data?: DocumentData }) => {
   const [selectedTheme, setSelectedTheme] = useState("Blue");
-
+  const { themes } = useTheme();
   useEffect(() => {
     const settings = data?.data?.settings;
     setSelectedTheme(settings.theme);
@@ -55,7 +27,6 @@ const BioDesign = (data: { data?: DocumentData }) => {
           <div className="mt-2 grid grid-cols-2 rounded-xl bg-gray-100/[0.65] p-2">
             {themes.map(theme => {
               const isSelected = selectedTheme === theme.name;
-              console.log(theme.name, isSelected);
               return (
                 <ThemePreview
                   key={theme.name}
