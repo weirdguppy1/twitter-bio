@@ -62,7 +62,7 @@ const Bio = () => {
         <div
           className={clsx(
             "items-center space-y-2",
-            show ? "flex flex-col" : "hidden"
+            show ? "flex flex-col items-center" : "hidden"
           )}
         >
           <img src={data?.user.photoURL} className="h-15 w-15 rounded-xl" />
@@ -71,7 +71,7 @@ const Bio = () => {
             @{data?.username}
           </h1>
           <div className="rounded-full bg-white py-[1px] px-8" />
-          <div className="flex max-w-lg space-x-1">
+          <div className="min-w-md flex max-w-md space-x-1">
             {data?.socials?.map((social: LinkType) => {
               const domain = new URL(social.link).hostname
                 .replace("www.", "")
@@ -81,7 +81,7 @@ const Bio = () => {
               );
             })}
           </div>
-          <div className="flex max-w-lg flex-col space-y-4">
+          <div className="min-w-md flex max-w-md flex-col space-y-4">
             <div className="flex flex-col items-start space-y-1">
               <BioField bio content={data?.bio} title="Bio" id="bio" />
               {data?.fields?.map((field: FieldType) => {

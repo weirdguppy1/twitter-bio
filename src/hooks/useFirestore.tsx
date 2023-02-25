@@ -48,6 +48,8 @@ export interface UserDoc {
   user: UserInfo;
 }
 
+type Theme = "Midnight" | "Honey" | "Pinkout" | "Emerald";
+
 const useFirestore = () => {
   const [user] = useAuthState(auth);
   const docRef = doc(db, "users", user?.uid || "fallback");
@@ -60,7 +62,7 @@ const useFirestore = () => {
       username: username,
       user: user,
       settings: {
-        theme: "blue",
+        theme: "Blue",
         font: "Satoshi"
       }
     });
