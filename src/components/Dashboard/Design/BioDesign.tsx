@@ -34,12 +34,12 @@ const themes = [
 ];
 
 const BioDesign = (data: { data?: DocumentData }) => {
-  const [selectedTheme, setSelectedTheme] = useState();
+  const [selectedTheme, setSelectedTheme] = useState("Blue");
 
   useEffect(() => {
     const settings = data?.data?.settings;
     setSelectedTheme(settings.theme);
-  }, []);
+  }, [data]);
 
   return (
     <div className="py-2 px-8">
@@ -52,11 +52,13 @@ const BioDesign = (data: { data?: DocumentData }) => {
           <h1 className="inline-flex items-center space-x-1 text-xl md:text-2xl">
             <span>Theme</span>
           </h1>
-          <div className="mt-2 grid grid-cols-2 gap-4">
+          <div className="mt-2 grid grid-cols-2 rounded-xl bg-gray-100/[0.65] p-2">
             {themes.map(theme => {
               const isSelected = selectedTheme === theme.name;
+              console.log(theme.name, isSelected);
               return (
                 <ThemePreview
+                  key={theme.name}
                   name={theme.name}
                   style={theme.style}
                   linkStyle={theme.linkStyle}

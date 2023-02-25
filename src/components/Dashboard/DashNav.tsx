@@ -27,12 +27,12 @@ const DashNav = () => {
         <div className="flex items-center space-x-2">
           <ShareDropdown
             activator={
-              <button className="btn btn-white py-2 px-6 font-bold text-black">
+              <div className="btn btn-white py-2 px-6 font-bold text-black">
                 <div className="md:text-md flex items-center space-x-2 text-sm">
                   <span className="">Share</span>
                   <ShareIcon className="h-5 w-5" />
                 </div>
-              </button>
+              </div>
             }
           />
           <UserDropdown
